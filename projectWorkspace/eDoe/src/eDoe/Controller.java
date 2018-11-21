@@ -6,7 +6,7 @@ import java.util.TreeMap;
 
 public class Controller {
 	
-	private Map<String,usuarioDoador> usuarios;
+	private Map<String,UsuarioDoador> usuarios;
 	
 	private Map<Integer,Descritor> descritores;
 	
@@ -142,7 +142,7 @@ public class Controller {
 				}
 			}
 			
-			this.usuarios.get(idDoador).getItensParaDoacao().put(this.idItens,new ItemParaDoacao(String descricao, int quantidade, String tags));
+			this.usuarios.get(idDoador).getItensParaDoacao().put(this.idItens,new ItemParaDoacao(descricao, quantidade, tags, int id));
 			this.idItens += 1;
 			return (this.idItens-1);
 		}
