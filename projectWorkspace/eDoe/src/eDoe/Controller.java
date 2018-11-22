@@ -8,7 +8,7 @@ public class Controller {
 	
 	private Map<String,Usuario> usuarios;
 	
-	private Map<Integer,Descritor> descritores;
+	private Map<String,Descritor> descritores;
 	
 	private int idItens; 
 	
@@ -38,7 +38,7 @@ public class Controller {
 		}
 		
 		else {
-			this.usuarios.put(id,new usuarioDoador(id,nome,email,celular,classe));
+			this.usuarios.put(id,new Usuario(id,nome,email,celular,classe,"doador"));
 			return this.usuarios.get(id).toString();
 		}
 		
@@ -59,7 +59,7 @@ public class Controller {
 		
 		else {
 			String retorno = "";
-			for (usuarioDoador usuario : this.usuarios.values()) {
+			for (Usuario usuario : this.usuarios.values()) {
 				if (usuario.getNome().equals(nome)) {retorno += usuario.toString() + " | ";}
 			}
 			
@@ -135,7 +135,7 @@ public class Controller {
 				this.descritores.put(descricaoItem,new Descritor(descricaoItem,quantidade));
 			}
 			
-			for (ItemParaDoacao item : this.usuarios.get(idDoador).getItensParaDoacao().values()) {
+			for (Item item : this.usuarios.get(idDoador).getItens().values()) {
 				if (item.getDescricao.equals(descricaoItem) && item.getTags.equals(tags)) {
 					item.aumentaQuant(quantidade);
 					return item.getId();

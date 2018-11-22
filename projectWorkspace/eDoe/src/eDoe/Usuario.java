@@ -12,13 +12,13 @@ public class Usuario {
 	private String status;
 	private Map<Integer, Item> itens;
 	
-	public Usuario(String id, String nome, String email, String celular, String classe){
+	public Usuario(String id, String nome, String email, String celular, String classe, String status){
 		this.nome=nome;
 		this.id=id;
 		this.email=email;
 		this.celular=celular;
 		this.classe=classe;
-		status="doador";
+		this.status=status;
 		itens=new HashMap<>();
 		
 	}
@@ -75,6 +75,14 @@ public class Usuario {
 	public void setCelular(String celular) {
 		this.celular = celular;
 	}
+	
+	
+
+	public Map<Integer, Item> getItens() {
+		return itens;
+	}
+
+
 
 	@Override
 	public int hashCode() {
@@ -99,6 +107,13 @@ public class Usuario {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+
+
+	public void setNome(String nome2) {
+		this.nome = nome2;
+		
 	}
 	
 	
