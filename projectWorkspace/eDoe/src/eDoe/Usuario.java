@@ -1,5 +1,6 @@
 package eDoe;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Usuario {
@@ -11,7 +12,7 @@ public class Usuario {
 	private String status;
 	private Map<Integer, Item> itens;
 	
-	public UsuarioDoador(String id, String nome, String email, String celular, String classe){
+	public Usuario(String id, String nome, String email, String celular, String classe){
 		this.nome=nome;
 		this.id=id;
 		this.email=email;

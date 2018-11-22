@@ -6,14 +6,14 @@ import java.util.TreeMap;
 
 public class Controller {
 	
-	private Map<String,UsuarioDoador> usuarios;
+	private Map<String,Usuario> usuarios;
 	
 	private Map<Integer,Descritor> descritores;
 	
 	private int idItens; 
 	
 	public Controller() {
-		this.usuarios = new LinkedHashMap<String,usuarioDoador>();
+		this.usuarios = new LinkedHashMap<String,Usuario>();
 		this.descritores = new TreeMap<String,Descritor>();
 		this.idItens = 0;
 	}
