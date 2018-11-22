@@ -26,7 +26,7 @@ public class Descritor {
 		this.quant -= quant;
 	}
 	
-	public void aumentarQuant(int quant) {
+	public void aumentaQuant(int quant) {
 		this.quant += quant;
 	}
 }

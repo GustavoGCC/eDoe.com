@@ -128,7 +128,7 @@ public class Controller {
 		
 		else {
 			if (this.descritores.containsKey(descricaoItem)) {
-				this.descritores.get(descricaoItem).aumentarQuant(quantidade);
+				this.descritores.get(descricaoItem).aumentaQuant(quantidade);
 			}
 			
 			if (!this.descritores.containsKey(descricaoItem)) {
@@ -136,13 +136,13 @@ public class Controller {
 			}
 			
 			for (Item item : this.usuarios.get(idDoador).getItens().values()) {
-				if (item.getDescricao.equals(descricaoItem) && item.getTags.equals(tags)) {
+				if (item.getDescricao().equals(descricaoItem) && item.getTags().equals(tags)) {
 					item.aumentaQuant(quantidade);
 					return item.getId();
 				}
 			}
 			
-			this.usuarios.get(idDoador).getItensParaDoacao().put(this.idItens,new ItemParaDoacao(descricao, quantidade, tags, int id));
+			this.usuarios.get(idDoador).getItens().put(this.idItens,new Item(descricaoItem, quantidade, tags,idItens));
 			this.idItens += 1;
 			return (this.idItens-1);
 		}
@@ -151,10 +151,10 @@ public class Controller {
 	public String exibeItem(int id, String idDoador) {
 		if (idDoador == null || idDoador.trim().equals("")) {throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");}
 		
-		if (!this.usuarios.get(idDoador).getItensParaDoacao().containsKey(id)) {throw new IllegalArgumentException("Item nao encontrado: " + id + ".");}
+		if (!this.usuarios.get(idDoador).getItens().containsKey(id)) {throw new IllegalArgumentException("Item nao encontrado: " + id + ".");}
 		
 		else {
-			return this.usuarios.get(idDoador).getItensParaDoacao().get(id).toString();
+			return this.usuarios.get(idDoador).getItens().get(id).toString();
 		}
 	}
 
@@ -165,35 +165,35 @@ public class Controller {
 		
 		if (!this.usuarios.containsKey(idDoador)) {throw new IllegalArgumentException("Usuario nao encontrado: " + idDoador + ".");}
 		
-		if (!this.usuarios.get(idDoador).getItensParaDoacao().containsKey(id)) {throw new IllegalArgumentException("Item nao encontrado: " + id + ".");}
+		if (!this.usuarios.get(idDoador).getItens().containsKey(id)) {throw new IllegalArgumentException("Item nao encontrado: " + id + ".");}
 		
 		else {
-			if (quantidade != null) {
-				if (this.descritores.get(this.usuarios.get(idDoador).getItensParaDoacao().get(id).getDescricao).getQuant() > quantidade) {
+			if (String.valueOf(quantidade) != null) {
+				if (this.descritores.get(this.usuarios.get(idDoador).getItens().get(id).getDescricao()).getQuant() > quantidade) {
 					
-					int diferenca = this.descritores.get(this.usuarios.get(idDoador).getItensParaDoacao().get(id).getDescricao()).getQuant() - quantidade;
+					int diferenca = this.descritores.get(this.usuarios.get(idDoador).getItens().get(id).getDescricao()).getQuant() - quantidade;
 					
-					this.descritores.get(this.usuarios.get(idDoador).getItensParaDoacao().get(id).getDescricao()).diminuiQuant(diferenca);
+					this.descritores.get(this.usuarios.get(idDoador).getItens().get(id).getDescricao()).diminuiQuant(diferenca);
 				}
 				
-				if (this.descritores.get(this.usuarios.get(idDoador).getItensParaDoacao().get(id).getDescricao).getQuant() < quantidade) {
+				if (this.descritores.get(this.usuarios.get(idDoador).getItens().get(id).getDescricao()).getQuant() < quantidade) {
 					
-					int diferenca = quantidade - this.descritores.get(this.usuarios.get(idDoador).getItensParaDoacao().get(id).getDescricao()).getQuant();
+					int diferenca = quantidade - this.descritores.get(this.usuarios.get(idDoador).getItens().get(id).getDescricao()).getQuant();
 					
-					this.descritores.get(this.usuarios.get(idDoador).getItensParaDoacao().get(id).getDescricao()).aumentaQuant(diferenca);
+					this.descritores.get(this.usuarios.get(idDoador).getItens().get(id).getDescricao()).aumentaQuant(diferenca);
 				}					
 					
-				this.usuarios.get(idDoador).getItensParaDoacao().get(id).setQuant(quantidade);
+				this.usuarios.get(idDoador).getItens().get(id).setQuant(quantidade);
 				
 			}
 			
 		if (tags != null && !tags.trim().equals("")) {
 			
-			this.usuarios.get(idDoador).getItensParaDoacao().get(id).setTags(tags);
+			this.usuarios.get(idDoador).getItens().get(id).setTags(tags);
 			
 		}
 		
-		return this.usuarios.get(idDoador).getItensParaDoacao().get(id).toString();
+		return this.usuarios.get(idDoador).getItens().get(id).toString();
 			
 		}
 	}
@@ -205,18 +205,18 @@ public class Controller {
 		
 		if (!this.usuarios.containsKey(idDoador)) {throw new IllegalArgumentException("Usuario nao encontrado: " + idDoador + ".");}
 		
-		if (!this.usuarios.get(idDoador).getItensParaDoacao().containsKey(id)) {throw new IllegalArgumentException("Item nao encontrado: " + id + ".");}
+		if (!this.usuarios.get(idDoador).getItens().containsKey(id)) {throw new IllegalArgumentException("Item nao encontrado: " + id + ".");}
 		
-		if (this.usuarios.get(idDoador).getItensParaDoacao().size() == 0) {
+		if (this.usuarios.get(idDoador).getItens().size() == 0) {
 			throw new IllegalArgumentException("O Usuario nao possui itens cadastrados.");
 		}
 		
 		else {
-			int diferenca = this.usuarios.get(idDoador).getItensParaDoacao().get(id).getQuant();
+			int diferenca = this.usuarios.get(idDoador).getItens().get(id).getQuant();
 			
-			this.descritores.get(this.usuarios.get(idDoador).getItensParaDoacao().get(id).getDescricao()).diminuiQuant(diferenca);
+			this.descritores.get(this.usuarios.get(idDoador).getItens().get(id).getDescricao()).diminuiQuant(diferenca);
 			
-			this.usuarios.get(idDoador).getItensParaDoacao().remove(id);
+			this.usuarios.get(idDoador).getItens().remove(id);
 			
 		}
 	}

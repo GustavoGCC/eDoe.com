@@ -59,6 +59,22 @@ public class Item {
 	public void setTags(String tags) {
 		this.Tags = tags;
 	}
+	
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public String getTags() {
+		return Tags;
+	}
+
+	public int getQuant() {
+		return this.quantidade;
+	}
 
 	
 }

@@ -19,17 +19,15 @@ public class Usuario {
 		this.celular=celular;
 		this.classe=classe;
 		this.status=status;
-		itens=new HashMap<>();
+		this.itens=new HashMap<>();
 		
-	}
-
-	
+	}	
 	
 	public String exibeItem(int id) {
 		return itens.get(id).toString();
 	}
 	
-	public void adicionaItemParaDoacao(String descricaoItem, int quantidade, String tags, int id) {
+	public void adicionaItem(String descricaoItem, int quantidade, String tags, int id) {
 		itens.put(id, new Item(descricaoItem, quantidade, tags, id));
 	}
 	
