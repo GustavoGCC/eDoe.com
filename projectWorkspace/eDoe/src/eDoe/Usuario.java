@@ -2,29 +2,41 @@ package eDoe;
 
 import java.util.Map;
 
-public abstract class Usuario {
-	protected String nome;
-	protected String id;
-	protected String email;
-	protected String celular;
-	protected String classe;
-	protected String status;
-	protected Map<Integer, String> itensParaDoacao;
+public class Usuario {
+	private String nome;
+	private String id;
+	private String email;
+	private String celular;
+	private String classe;
+	private String status;
+	private Map<Integer, Item> itens;
+	
+	public UsuarioDoador(String id, String nome, String email, String celular, String classe){
+		this.nome=nome;
+		this.id=id;
+		this.email=email;
+		this.celular=celular;
+		this.classe=classe;
+		status="doador";
+		itens=new HashMap<>();
+		
+	}
+
 	
 	
 	public String exibeItem(int id) {
-		return itensParaDoacao.get(id).toString();
+		return itens.get(id).toString();
 	}
 	
 	public void adicionaItemParaDoacao(String descricaoItem, int quantidade, String tags, int id) {
-		itensParaDoacao.put(id, new ItemParaDoacao(descricaoItem, quantidade, tags, id));
+		itens.put(id, new Item(descricaoItem, quantidade, tags, id));
 	}
 	
 	public String atualizaItemParaDoacao(int id, int quantidade, String tags) {
-		itensParaDoacao.get(id).setQuant(quantidade);
-		itensParaDoacao.get(id).setTags(tags);
+		itens.get(id).setQuant(quantidade);
+		itens.get(id).setTags(tags);
 		
-		return itensParaDoacao.get(id).toString();
+		return itens.get(id).toString();
 	}
 	
 	public String toString() {
