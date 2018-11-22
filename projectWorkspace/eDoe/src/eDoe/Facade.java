@@ -9,6 +9,10 @@ public class Facade {
 		return c.adicionaDoador(id,nome,email,celular,classe);
 	}
 	
+	public void lerReceptores(String caminho) {
+		c.lerReceptores(caminho);
+	}
+	
 	public String pesquisaUsuarioPorId(String id) {
 		return c.pesquisaUsuarioPorId(id);
 	}

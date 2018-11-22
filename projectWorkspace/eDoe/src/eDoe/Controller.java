@@ -1,7 +1,11 @@
 package eDoe;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.TreeMap;
 
 public class Controller {
@@ -217,8 +221,25 @@ public class Controller {
 			this.descritores.get(this.usuarios.get(idDoador).getItens().get(id).getDescricao()).diminuiQuant(diferenca);
 			
 			this.usuarios.get(idDoador).getItens().remove(id);
-			
 		}
+	}
+
+	public void lerReceptores(String caminho){
+		Scanner sc = null;
+		try {
+			sc = new Scanner(new File(caminho));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		String linha = null;
+		while(sc.hasNextLine()) {
+			linha = sc.nextLine();
+			if (linha.equals("id,nome,E-mail,celular,classe"))
+				continue;
+			String[] dadosReceptor = linha.split(",");
+			this.usuarios.put(dadosReceptor[0], new Usuario(dadosReceptor[0],dadosReceptor[1],dadosReceptor[2],dadosReceptor[3],dadosReceptor[4],"receptor"));
+		}
+		sc.close();
 	}
 
 }
