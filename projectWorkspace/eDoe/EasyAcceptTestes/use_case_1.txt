@@ -83,4 +83,3 @@ removeUsuario id=85618414490
 expectError "Usuario nao encontrado: "${id10}"." removeUsuario id=${id10}
 expectError "Usuario nao encontrado: 85618414490." removeUsuario id=85618414490
 expectError "Entrada invalida: id do usuario nao pode ser vazio ou nulo." removeUsuario id=
-

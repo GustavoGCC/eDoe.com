@@ -212,7 +212,7 @@ public class Controller {
 		if (!this.usuarios.containsKey(idDoador)) {throw new IllegalArgumentException("Usuario nao encontrado: " + idDoador + ".");}
 		
 		if (this.usuarios.get(idDoador).getItens().size() == 0) {
-			throw new IllegalArgumentException("O Usuário não possui itens cadastrados.");
+			throw new IllegalArgumentException("O Usuario nao possui itens cadastrados.");
 		}
 		
 		if (!this.usuarios.get(idDoador).getItens().containsKey(id)) {throw new IllegalArgumentException("Item nao encontrado: " + id + ".");}
