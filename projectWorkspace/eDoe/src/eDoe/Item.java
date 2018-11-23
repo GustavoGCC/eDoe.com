@@ -15,7 +15,15 @@ public class Item {
 
 	@Override
 	public String toString() {
-		return " - " + this.descricao + ", tags: [" + this.Tags + "], quantidade: " + this.quantidade;
+		String[] listaTags = this.Tags.split(",");
+		String tags = "";
+		tags += this.id + " - " + this.descricao + ", tags: [";
+		for (int i = 0; i < listaTags.length; i++) {
+			tags += listaTags[i] + ", ";
+		}
+		String retorno = tags.substring(0,tags.length()-2);
+		retorno += "], quantidade: " + this.quantidade;
+		return retorno;
 	}
 	
 	@Override

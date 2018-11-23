@@ -43,7 +43,7 @@ public class Controller {
 		
 		else {
 			this.usuarios.put(id,new Usuario(id,nome,email,celular,classe,"doador"));
-			return this.usuarios.get(id).toString();
+			return id;
 		}
 		
 	}
@@ -67,7 +67,7 @@ public class Controller {
 				if (usuario.getNome().equals(nome)) {retorno += usuario.toString() + " | ";}
 			}
 			
-			if (retorno.trim().equals("")) {throw new IllegalArgumentException("Usuario nao encontrado: " + nome);}
+			if (retorno.trim().equals("")) {throw new IllegalArgumentException("Usuario nao encontrado: " + nome + ".");}
 			
 			else {
 				return retorno.substring(0, retorno.length()-3);
@@ -113,10 +113,10 @@ public class Controller {
 	public void adicionaDescritor(String descricao) {
 		if (descricao == null || descricao.trim().equals("")) {throw new IllegalArgumentException("Entrada invalida: descricao nao pode ser vazia ou nula.");}
 		
-		if (this.descritores.containsKey(descricao)) {throw new IllegalArgumentException("Descritor de Item ja existente: " + descricao + ".");}
+		if (this.descritores.containsKey(descricao.toLowerCase())) {throw new IllegalArgumentException("Descritor de Item ja existente: " + descricao.toLowerCase() + ".");}
 		
 		else {
-			this.descritores.put(descricao,new Descritor(descricao));
+			this.descritores.put(descricao.toLowerCase(),new Descritor(descricao.toLowerCase()));
 		}
 		
 	}
@@ -131,22 +131,22 @@ public class Controller {
 		if (!this.usuarios.containsKey(idDoador)) {throw new IllegalArgumentException("Usuario nao encontrado: " + idDoador + ".");}
 		
 		else {
-			if (this.descritores.containsKey(descricaoItem)) {
-				this.descritores.get(descricaoItem).aumentaQuant(quantidade);
+			if (this.descritores.containsKey(descricaoItem.toLowerCase())) {
+				this.descritores.get(descricaoItem.toLowerCase()).aumentaQuant(quantidade);
 			}
 			
-			if (!this.descritores.containsKey(descricaoItem)) {
-				this.descritores.put(descricaoItem,new Descritor(descricaoItem,quantidade));
+			if (!this.descritores.containsKey(descricaoItem.toLowerCase())) {
+				this.descritores.put(descricaoItem.toLowerCase(),new Descritor(descricaoItem.toLowerCase(),quantidade));
 			}
 			
 			for (Item item : this.usuarios.get(idDoador).getItens().values()) {
-				if (item.getDescricao().equals(descricaoItem) && item.getTags().equals(tags)) {
+				if (item.getDescricao().toLowerCase().equals(descricaoItem.toLowerCase()) && item.getTags().equals(tags)) {
 					item.aumentaQuant(quantidade);
 					return item.getId();
 				}
 			}
 			
-			this.usuarios.get(idDoador).getItens().put(this.idItens,new Item(descricaoItem, quantidade, tags,idItens));
+			this.usuarios.get(idDoador).getItens().put(this.idItens,new Item(descricaoItem.toLowerCase(), quantidade, tags,idItens));
 			this.idItens += 1;
 			return (this.idItens-1);
 		}
@@ -154,6 +154,8 @@ public class Controller {
 
 	public String exibeItem(int id, String idDoador) {
 		if (idDoador == null || idDoador.trim().equals("")) {throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");}
+		
+		if (!this.usuarios.containsKey(idDoador)) {throw new IllegalArgumentException("Usuario nao encontrado: " + idDoador + ".");}
 		
 		if (!this.usuarios.get(idDoador).getItens().containsKey(id)) {throw new IllegalArgumentException("Item nao encontrado: " + id + ".");}
 		
@@ -172,7 +174,7 @@ public class Controller {
 		if (!this.usuarios.get(idDoador).getItens().containsKey(id)) {throw new IllegalArgumentException("Item nao encontrado: " + id + ".");}
 		
 		else {
-			if (String.valueOf(quantidade) != null) {
+			if (quantidade != 0) {
 				if (this.descritores.get(this.usuarios.get(idDoador).getItens().get(id).getDescricao()).getQuant() > quantidade) {
 					
 					int diferenca = this.descritores.get(this.usuarios.get(idDoador).getItens().get(id).getDescricao()).getQuant() - quantidade;
@@ -209,11 +211,11 @@ public class Controller {
 		
 		if (!this.usuarios.containsKey(idDoador)) {throw new IllegalArgumentException("Usuario nao encontrado: " + idDoador + ".");}
 		
-		if (!this.usuarios.get(idDoador).getItens().containsKey(id)) {throw new IllegalArgumentException("Item nao encontrado: " + id + ".");}
-		
 		if (this.usuarios.get(idDoador).getItens().size() == 0) {
-			throw new IllegalArgumentException("O Usuario nao possui itens cadastrados.");
+			throw new IllegalArgumentException("O Usuário não possui itens cadastrados.");
 		}
+		
+		if (!this.usuarios.get(idDoador).getItens().containsKey(id)) {throw new IllegalArgumentException("Item nao encontrado: " + id + ".");}
 		
 		else {
 			int diferenca = this.usuarios.get(idDoador).getItens().get(id).getQuant();
@@ -226,20 +228,35 @@ public class Controller {
 
 	public void lerReceptores(String caminho){
 		Scanner sc = null;
+		
 		try {
 			sc = new Scanner(new File(caminho));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+		
 		String linha = null;
+		
 		while(sc.hasNextLine()) {
+			
 			linha = sc.nextLine();
+			
 			if (linha.equals("id,nome,E-mail,celular,classe"))
 				continue;
+			
 			String[] dadosReceptor = linha.split(",");
-			this.usuarios.put(dadosReceptor[0], new Usuario(dadosReceptor[0],dadosReceptor[1],dadosReceptor[2],dadosReceptor[3],dadosReceptor[4],"receptor"));
+			
+			if (this.usuarios.containsKey(dadosReceptor[0])) {
+				this.usuarios.get(dadosReceptor[0]).setNome(dadosReceptor[1]);
+				this.usuarios.get(dadosReceptor[0]).setEmail(dadosReceptor[2]);
+				this.usuarios.get(dadosReceptor[0]).setCelular(dadosReceptor[3]);
+			}
+			
+			else {this.usuarios.put(dadosReceptor[0], new Usuario(dadosReceptor[0],dadosReceptor[1],dadosReceptor[2],dadosReceptor[3],dadosReceptor[4],"receptor"));}
 		}
+		
 		sc.close();
+		
 	}
 
 }
