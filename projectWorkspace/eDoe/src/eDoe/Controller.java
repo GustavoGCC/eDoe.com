@@ -105,6 +105,9 @@ public class Controller {
 		if (!this.usuarios.containsKey(id)) {throw new IllegalArgumentException("Usuario nao encontrado: " + id + ".");}
 		
 		else {
+			for (Item item : this.usuarios.get(id).getItens().values()) {
+				removeItemParaDoacao(item.getId(),id);
+			}
 			this.usuarios.remove(id);
 		}
 		
@@ -131,6 +134,24 @@ public class Controller {
 		if (!this.usuarios.containsKey(idDoador)) {throw new IllegalArgumentException("Usuario nao encontrado: " + idDoador + ".");}
 		
 		else {
+			for (Item item : this.usuarios.get(idDoador).getItens().values()) {
+				if (item.getDescricao().toLowerCase().equals(descricaoItem.toLowerCase()) && item.getTags().equals(tags)) {
+					if (item.getQuant() >= quantidade) {
+						
+						int diferenca = item.getQuant() - quantidade;
+						this.descritores.get(descricaoItem).diminuiQuant(diferenca);
+					}
+					
+					else {
+							int diferenca = quantidade - item.getQuant();
+							this.descritores.get(descricaoItem).aumentaQuant(diferenca);
+					}
+					
+					item.setQuant(quantidade);
+					return item.getId();
+				}
+			}
+			
 			if (this.descritores.containsKey(descricaoItem.toLowerCase())) {
 				this.descritores.get(descricaoItem.toLowerCase()).aumentaQuant(quantidade);
 			}
@@ -139,15 +160,10 @@ public class Controller {
 				this.descritores.put(descricaoItem.toLowerCase(),new Descritor(descricaoItem.toLowerCase(),quantidade));
 			}
 			
-			for (Item item : this.usuarios.get(idDoador).getItens().values()) {
-				if (item.getDescricao().toLowerCase().equals(descricaoItem.toLowerCase()) && item.getTags().equals(tags)) {
-					item.aumentaQuant(quantidade);
-					return item.getId();
-				}
-			}
-			
 			this.usuarios.get(idDoador).getItens().put(this.idItens,new Item(descricaoItem.toLowerCase(), quantidade, tags,idItens));
+			
 			this.idItens += 1;
+			
 			return (this.idItens-1);
 		}
 	}
@@ -175,16 +191,16 @@ public class Controller {
 		
 		else {
 			if (quantidade != 0) {
-				if (this.descritores.get(this.usuarios.get(idDoador).getItens().get(id).getDescricao()).getQuant() > quantidade) {
+				if (this.usuarios.get(idDoador).getItens().get(id).getQuant() > quantidade) {
 					
-					int diferenca = this.descritores.get(this.usuarios.get(idDoador).getItens().get(id).getDescricao()).getQuant() - quantidade;
+					int diferenca = this.usuarios.get(idDoador).getItens().get(id).getQuant() - quantidade;
 					
 					this.descritores.get(this.usuarios.get(idDoador).getItens().get(id).getDescricao()).diminuiQuant(diferenca);
 				}
 				
-				if (this.descritores.get(this.usuarios.get(idDoador).getItens().get(id).getDescricao()).getQuant() < quantidade) {
+				if (this.usuarios.get(idDoador).getItens().get(id).getQuant() < quantidade) {
 					
-					int diferenca = quantidade - this.descritores.get(this.usuarios.get(idDoador).getItens().get(id).getDescricao()).getQuant();
+					int diferenca = quantidade - this.usuarios.get(idDoador).getItens().get(id).getQuant();
 					
 					this.descritores.get(this.usuarios.get(idDoador).getItens().get(id).getDescricao()).aumentaQuant(diferenca);
 				}					
