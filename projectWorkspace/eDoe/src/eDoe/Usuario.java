@@ -40,6 +40,7 @@ public class Usuario {
 	
 	public String toString() {
 		return nome+"/"+id+", "+email+", "+celular+", status: "+status;
+			  
 	}
 	
 	public String getNome() {

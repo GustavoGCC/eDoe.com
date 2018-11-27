@@ -13,27 +13,46 @@ class ControllerTest {
 	
 	@Test
 	void testAdicionaDoador() {
-		
+		Controller c = new Controller();
+		c.adicionaDoador("167", "Joao Victor", "joao.wanderley@ccc.ufcg.edu.br", "9999-8321", "PESSOA FISICA");
+		assertEquals(c.pesquisaUsuarioPorId("167"), "Joao Vitor/167, joao.wanderley@ccc.ufcg.edu.br, 9999-8321, status: doador");
 	}
 	
 	@Test
 	void testPesquisaUsuarioPorId() {
-		
+		Controller c = new Controller();
+		c.adicionaDoador("999", "Lucas Leal", "lucas.lucena@ccc.ufcg.edu.br", "2345-6780", "PESSOA FISICA");
+		assertEquals(c.pesquisaUsuarioPorId("999"), "Lucas Leal/999, lucas.lucena@ccc.ufcg.edu.br, 2345-6780, status: doador");
 	}
 	
 	@Test
 	void testPesquisaUsuarioPorNome() {
-		
+		Controller c = new Controller();
+		c.adicionaDoador("100", "Daniel", "daniel.figueredo@ccc.ufcg.edu.br", "1010-2222", "PESSOA FISICA");
+		assertEquals(c.pesquisaUsuarioPorNome("Daniel"), "Daniel/100, daniel.figueredo@ccc.ufcg.edu.br, 1010-2222, status: doador");
 	}
 	
 	@Test
 	void testAtualizaUsuario() {
-		
+		Controller c = new Controller();
+		c.adicionaDoador("166", "Joao Victo", "joao.wander@ccc.ufg.edu.br", "9999-8123", "PESSOA FISICA");
+		c.atualizaUsuario("167", "Joao Victor", "joao.wanderley@ccc.ufcg.edu.br", "9999-8321");
+		assertEquals(c.pesquisaUsuarioPorId("167"), "Joao Vitor/167, joao.wanderley@ccc.ufcg.edu.br, 9999-8321, status: doador");
 	}
 	
 	@Test
 	void testRemoveUsuario() {
+		Controller c = new Controller();
+		c.adicionaDoador("167", "Joao Victor", "joao.wanderley@ccc.ufcg.edu.br", "9999-8321", "PESSOA FISICA");
+		c.adicionaDoador("999", "Lucas Leal", "lucas.lucena@ccc.ufcg.edu.br", "2345-6780", "PESSOA FISICA");
+		c.adicionaDoador("100", "Daniel", "daniel.figueredo@ccc.ufcg.edu.br", "1010-2222", "PESSOA FISICA");
+		c.removeUsuario("999");
+		assertThrows(IllegalArgumentException.class,()->{c.pesquisaUsuarioPorId("999");} );
 		
+		try {c.pesquisaUsuarioPorId("999");
+		}catch(IllegalArgumentException exception) {
+			assertEquals(exception, "Usuario nao encontrado: 999.");
+		};
 	}
 	
 	@Test
