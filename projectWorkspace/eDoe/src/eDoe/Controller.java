@@ -9,6 +9,13 @@ import java.util.Scanner;
 import java.util.TreeMap;
 
 public class Controller {
+	/** Galera, isso é so uma anotação para que vcs saibam o que foi feito, o problema do jar pode ser resolvido
+	 * deletando o jar e indo em configure build path e depois add external jar apos isso basta escolher o easyaccept.jar;
+	 * para simplificar a validacao eu criei uma classe Validacao, quem for adaptar a validacao siga o modelo de
+	 * adicionarDoador
+	 * 
+	 */
+	
 	
 	private Map<String,Usuario> usuarios;
 	
@@ -16,35 +23,21 @@ public class Controller {
 	
 	private int idItens; 
 	
+	private Validacao validador;
+	
 	public Controller() {
 		this.usuarios = new LinkedHashMap<String,Usuario>();
 		this.descritores = new TreeMap<String,Descritor>();
 		this.idItens = 0;
+		this.validador = new Validacao();
 	}
 	
 	public String adicionaDoador(String id, String nome, String email, String celular, String classe) {
-		if (nome == null || nome.trim().equals("")) {throw new IllegalArgumentException("Entrada invalida: nome nao pode ser vazio ou nulo.");}
 		
-		if (email == null || email.trim().equals("")) {throw new IllegalArgumentException("Entrada invalida: email nao pode ser vazio ou nulo.");}
-	
-		if (celular == null || celular.trim().equals("")) {throw new IllegalArgumentException("Entrada invalida: celular nao pode ser vazio ou nulo.");}
-	
-		if (classe == null || classe.trim().equals("")) {throw new IllegalArgumentException("Entrada invalida: classe nao pode ser vazia ou nula.");}
+		this.validador.validaAdicionaDoador(id, nome, email, celular, classe, this.usuarios);
 		
-		if (!classe.equals("PESSOA_FISICA") && !classe.equals("ONG") && !classe.equals("ORGAO_PUBLICO_ESTADUAL") && !classe.equals("ORGAO_PUBLICO_MUNICIPAL") && !classe.equals("SOCIEDADE") && !classe.equals("IGREJA") && !classe.equals("ORGAO_PUBLICO_FEDERAL") && !classe.equals("ASSOCIACAO")) {
-			throw new IllegalArgumentException("Entrada invalida: opcao de classe invalida.");
-		}
-		
-		if (id == null || id.trim().equals("")) {throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");}
-	
-		if (this.usuarios.containsKey(id)) {
-			throw new IllegalArgumentException("Usuario ja existente: " + id + ".");
-		}
-		
-		else {
-			this.usuarios.put(id,new Usuario(id,nome,email,celular,classe,"doador"));
-			return id;
-		}
+		this.usuarios.put(id,new Usuario(id,nome,email,celular,classe,"doador"));
+		return id;
 		
 	}
 
