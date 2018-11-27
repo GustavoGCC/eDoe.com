@@ -274,5 +274,42 @@ public class Controller {
 		sc.close();
 		
 	}
+	
+	public String listaDescritorDeItensParaDoacao() {
+		String s="";
+		
+		for (Descritor i : descritores.values()) {
+			s+=i.toString()+" | ";
+		}
+		
+		return s.trim();
+		
+	}
+	
+	
+	public String pesquisaItemParaDoacaoPorDescricao(String pesquisa) {
+		if (pesquisa==null) {
+			throw new NullPointerException("Entrada invalida: texto da pesquisa nao pode ser vazio ou nulo.");
+		}
+		
+		if (pesquisa.trim()=="") {
+			throw new IllegalArgumentException("Entrada invalida: texto da pesquisa nao pode ser vazio ou nulo.");
+		}
+		
+		String s="";
+		
+		for (String i : descritores.keySet()) {
+			if (i.contains(pesquisa.toLowerCase())) {
+				s+=i.toString()+" | ";
+			}
+		}
+		
+		return s.trim();
+	}
+	
+	
+	
+	
+	
 
 }
