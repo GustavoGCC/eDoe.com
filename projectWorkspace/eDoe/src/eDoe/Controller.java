@@ -23,7 +23,7 @@ public class Controller {
 	
 	private Map<String,Descritor> descritores;
 	
-	private int idItens; 
+	private int idItens;
 	
 	private Validacao validador;
 	
@@ -131,18 +131,13 @@ public class Controller {
 		else {
 			for (Item item : this.usuarios.get(idDoador).getItens().values()) {
 				if (item.getDescricao().toLowerCase().equals(descricaoItem.toLowerCase()) && item.getTags().equals(tags)) {
-					if (item.getQuant() >= quantidade) {
-						
-						int diferenca = item.getQuant() - quantidade;
-						this.descritores.get(descricaoItem).diminuiQuant(diferenca);
-					}
 					
-					else {
-							int diferenca = quantidade - item.getQuant();
-							this.descritores.get(descricaoItem).aumentaQuant(diferenca);
-					}
+					int diferenca = quantidade - item.getQuant();
 					
+					this.descritores.get(descricaoItem).aumentaQuant(diferenca);
+									
 					item.setQuant(quantidade);
+					
 					return item.getId();
 				}
 			}

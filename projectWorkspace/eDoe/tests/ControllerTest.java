@@ -8,7 +8,7 @@ class ControllerTest {
 
 	@Test
 	void test() {
-		fail("Not yet implemented");
+
 	}
 	
 	@Test
@@ -62,7 +62,6 @@ class ControllerTest {
 	
 	@Test
 	void testAdicionaItemParaDoacao() {
-		
 	}
 	
 	@Test
@@ -114,12 +113,12 @@ class ControllerTest {
 		c.adicionaItemParaDoacao("222", "cama de casal", 1, "plus size");
 		c.adicionaItemParaDoacao("111", "Cama de solteiro", 1, "infantil");
 		
-		try {c.PesquisaItemParaDoacaoPorDescricao("");
+		try {c.pesquisaItemParaDoacaoPorDescricao("");
 		}catch(IllegalArgumentException exception) {};
 		
-		try {c.PesquisaItemParaDoacaoPorDescricao();
+		try {c.pesquisaItemParaDoacaoPorDescricao(null);
 		}catch(IllegalArgumentException exception) {};
 		
-		assertEquals(c.PesquisaItemParaDoacaoPorDescricao("cama"),"1 - cama de casal, tags: [plus size], quantidade: 1 | 2 - Cama de solteiro, tags: [infantil], quantidade: 2 | 0 - cama elastica, tags: [pulavel], quantidade: 2");
+		assertEquals(c.pesquisaItemParaDoacaoPorDescricao("cama"),"1 - cama de casal, tags: [plus size], quantidade: 1 | 2 - Cama de solteiro, tags: [infantil], quantidade: 2 | 0 - cama elastica, tags: [pulavel], quantidade: 2");
 	}
 }
