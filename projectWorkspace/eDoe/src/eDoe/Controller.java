@@ -9,11 +9,13 @@ import java.util.Scanner;
 import java.util.TreeMap;
 
 public class Controller {
-	/** Galera, isso é so uma anotação para que vcs saibam o que foi feito, o problema do jar pode ser resolvido
-	 * deletando o jar e indo em configure build path e depois add external jar apos isso basta escolher o easyaccept.jar;
+	/** Galera, isso é so uma anotação para que vcs saibam o que foi feito, o problema do jar 
+	 * ja esta resolvido mas precisso que vcs testem, caso ainda tenha problema ele se resolve
+     * deletando o jar e indo em configure build path e depois add external jar apos isso basta escolher o easyaccept.jar;
 	 * para simplificar a validacao eu criei uma classe Validacao, quem for adaptar a validacao siga o modelo de
 	 * adicionarDoador
 	 * 
+	 * Atualizacao: eu acho que eu consigi resolver definitivamente com uma mudanca que fiz 
 	 */
 	
 	

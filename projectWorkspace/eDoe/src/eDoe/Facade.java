@@ -52,7 +52,7 @@ public class Facade {
 	}
 	
 	public static void main(String[] args) {
-		args = new String[] {"eDoe.Facade","EasyAcceptTestes/use_case_1.txt","EasyAcceptTestes/use_case_2.txt"};
+		args = new String[] {"eDoe.Facade","EasyAcceptTestes/use_case_1.txt","EasyAcceptTestes/use_case_2.txt","EasyAcceptTestes/use_case_3.txt"};
 		EasyAccept.main(args);
 	}
 	

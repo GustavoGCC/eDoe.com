@@ -8,7 +8,7 @@ public class Validacao {
 		
 	}
 	
-	public boolean validaAdicionaDoador(String id, String nome, String email, String celular, String classe, Map<String,Usuario> usuarios) {
+	public void validaAdicionaDoador(String id, String nome, String email, String celular, String classe, Map<String,Usuario> usuarios) {
 		verificaNuloOuVazio(nome, "Entrada invalida: nome nao pode ser vazio ou nulo.");
 		
 		verificaNuloOuVazio(email, "Entrada invalida: email nao pode ser vazio ou nulo.");
@@ -27,7 +27,6 @@ public class Validacao {
 			throw new IllegalArgumentException("Usuario ja existente: " + id + ".");
 		}
 		
-		return True;
 		
 	}
 	
