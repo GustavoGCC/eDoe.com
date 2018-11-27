@@ -44,19 +44,15 @@ public class Controller {
 	}
 
 	public String pesquisaUsuarioPorId(String id) {
-		if (id == null || id.trim().equals("")) {throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");}
-		
-		if (!this.usuarios.containsKey(id)) {throw new IllegalArgumentException("Usuario nao encontrado: " + id + ".");}
-	
-		else {
-			return this.usuarios.get(id).toString();
-		}
+		this.validador.validapesquisaUsuarioPorId(id, this.usuarios);
+
+		return this.usuarios.get(id).toString();
 	}
 
 	public String pesquisaUsuarioPorNome(String nome) {
-		if (nome == null || nome.trim().equals("")) {throw new IllegalArgumentException("Entrada invalida: nome nao pode ser vazio ou nulo.");}
+			
+			this.validador.validapesquisaUsuarioPorNome(nome);
 		
-		else {
 			String retorno = "";
 			for (Usuario usuario : this.usuarios.values()) {
 				if (usuario.getNome().equals(nome)) {retorno += usuario.toString() + " | ";}
@@ -66,16 +62,11 @@ public class Controller {
 			
 			else {
 				return retorno.substring(0, retorno.length()-3);
-			}
-		}	
+			}	
 	}
 
 	public String atualizaUsuario(String id, String nome, String email, String celular) {
-		if (id == null || id.trim().equals("")) {throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");}
-		
-		if (!this.usuarios.containsKey(id)) {throw new IllegalArgumentException("Usuario nao encontrado: " + id + ".");}
-		
-		else {
+			this.validador.validaAtualizaUsuario(id,nome,email,celular,this.usuarios);
 			
 			if (nome != null && !nome.trim().equals("")) {
 				this.usuarios.get(id).setNome(nome);
@@ -91,95 +82,67 @@ public class Controller {
 			
 			return this.usuarios.get(id).toString();
 			
-		}
 	}
 	
 	public void removeUsuario(String id) {
-		if (id == null || id.trim().equals("")) {throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");}
+		this.validador.validaRemoveUsario(id,this.usuarios);
 		
-		if (!this.usuarios.containsKey(id)) {throw new IllegalArgumentException("Usuario nao encontrado: " + id + ".");}
-		
-		else {
 			for (Item item : this.usuarios.get(id).getItens().values()) {
 				removeItemParaDoacao(item.getId(),id);
 			}
 			this.usuarios.remove(id);
-		}
 		
 	}
 
 	public void adicionaDescritor(String descricao) {
-		if (descricao == null || descricao.trim().equals("")) {throw new IllegalArgumentException("Entrada invalida: descricao nao pode ser vazia ou nula.");}
-		
-		if (this.descritores.containsKey(descricao.toLowerCase())) {throw new IllegalArgumentException("Descritor de Item ja existente: " + descricao.toLowerCase() + ".");}
-		
-		else {
-			this.descritores.put(descricao.toLowerCase(),new Descritor(descricao.toLowerCase()));
-		}
+		this.validador.validaAdicionaDescritor(descricao,this.descritores);
+
+		this.descritores.put(descricao.toLowerCase(),new Descritor(descricao.toLowerCase()));
+
 		
 	}
 
 	public int adicionaItemParaDoacao(String idDoador, String descricaoItem, int quantidade, String tags) {
-		if (descricaoItem == null || descricaoItem.trim().equals("")) {throw new IllegalArgumentException("Entrada invalida: descricao nao pode ser vazia ou nula.");}
+		this.validador.validaAdicionaItemParaDoacao(idDoador,descricaoItem,quantidade,tags,this.usuarios);
 		
-		if (quantidade <= 0) {throw new IllegalArgumentException("Entrada invalida: quantidade deve ser maior que zero.");}
-		
-		if (idDoador == null || idDoador.trim().equals("")) {throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");}
-		
-		if (!this.usuarios.containsKey(idDoador)) {throw new IllegalArgumentException("Usuario nao encontrado: " + idDoador + ".");}
-		
-		else {
-			for (Item item : this.usuarios.get(idDoador).getItens().values()) {
-				if (item.getDescricao().toLowerCase().equals(descricaoItem.toLowerCase()) && item.getTags().equals(tags)) {
+		for (Item item : this.usuarios.get(idDoador).getItens().values()) {
+			if (item.getDescricao().toLowerCase().equals(descricaoItem.toLowerCase()) && item.getTags().equals(tags)) {
 					
-					int diferenca = quantidade - item.getQuant();
+				int diferenca = quantidade - item.getQuant();
 					
-					this.descritores.get(descricaoItem).aumentaQuant(diferenca);
+				this.descritores.get(descricaoItem).aumentaQuant(diferenca);
 									
-					item.setQuant(quantidade);
+				item.setQuant(quantidade);
 					
-					return item.getId();
+				return item.getId();
 				}
 			}
 			
-			if (this.descritores.containsKey(descricaoItem.toLowerCase())) {
-				this.descritores.get(descricaoItem.toLowerCase()).aumentaQuant(quantidade);
-			}
-			
-			if (!this.descritores.containsKey(descricaoItem.toLowerCase())) {
-				this.descritores.put(descricaoItem.toLowerCase(),new Descritor(descricaoItem.toLowerCase(),quantidade));
-			}
-			
-			this.usuarios.get(idDoador).getItens().put(this.idItens,new Item(descricaoItem.toLowerCase(), quantidade, tags,idItens));
-			
-			this.idItens += 1;
-			
-			return (this.idItens-1);
+		if (this.descritores.containsKey(descricaoItem.toLowerCase())) {
+			this.descritores.get(descricaoItem.toLowerCase()).aumentaQuant(quantidade);
 		}
+			
+		if (!this.descritores.containsKey(descricaoItem.toLowerCase())) {
+			this.descritores.put(descricaoItem.toLowerCase(),new Descritor(descricaoItem.toLowerCase(),quantidade));
+		}
+			
+		this.usuarios.get(idDoador).getItens().put(this.idItens,new Item(descricaoItem.toLowerCase(), quantidade, tags,idItens));
+			
+		this.idItens += 1;
+			
+		return (this.idItens-1);
+
 	}
 
 	public String exibeItem(int id, String idDoador) {
-		if (idDoador == null || idDoador.trim().equals("")) {throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");}
-		
-		if (!this.usuarios.containsKey(idDoador)) {throw new IllegalArgumentException("Usuario nao encontrado: " + idDoador + ".");}
-		
-		if (!this.usuarios.get(idDoador).getItens().containsKey(id)) {throw new IllegalArgumentException("Item nao encontrado: " + id + ".");}
-		
-		else {
-			return this.usuarios.get(idDoador).getItens().get(id).toString();
-		}
+		this.validador.validaExibeItem(id,idDoador,this.usuarios);
+	
+		return this.usuarios.get(idDoador).getItens().get(id).toString();
 	}
 
 	public String atualizaItemParaDoacao(int id, String idDoador, int quantidade, String tags) {
-		if (id < 0) {throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");}
+		this.validador.validaAdicionaItemParaDoacao(id,idDoador,quantidade,tags,this.usuarios);
 		
-		if (idDoador == null || idDoador.trim().equals("")) {throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");}
-		
-		if (!this.usuarios.containsKey(idDoador)) {throw new IllegalArgumentException("Usuario nao encontrado: " + idDoador + ".");}
-		
-		if (!this.usuarios.get(idDoador).getItens().containsKey(id)) {throw new IllegalArgumentException("Item nao encontrado: " + id + ".");}
-		
-		else {
 			if (quantidade != 0) {
 				if (this.usuarios.get(idDoador).getItens().get(id).getQuant() > quantidade) {
 					
@@ -207,29 +170,17 @@ public class Controller {
 		
 		return this.usuarios.get(idDoador).getItens().get(id).toString();
 			
-		}
 	}
 
 	public void removeItemParaDoacao(int id, String idDoador) {
-		if (id < 0) {throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");}
+		this.validador.validaRemoveItemParaDoacao(id,idDoador,this.usuarios);
 		
-		if (idDoador == null || idDoador.trim().equals("")) {throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");}
-		
-		if (!this.usuarios.containsKey(idDoador)) {throw new IllegalArgumentException("Usuario nao encontrado: " + idDoador + ".");}
-		
-		if (this.usuarios.get(idDoador).getItens().size() == 0) {
-			throw new IllegalArgumentException("O Usuario nao possui itens cadastrados.");
-		}
-		
-		if (!this.usuarios.get(idDoador).getItens().containsKey(id)) {throw new IllegalArgumentException("Item nao encontrado: " + id + ".");}
-		
-		else {
-			int diferenca = this.usuarios.get(idDoador).getItens().get(id).getQuant();
+		int diferenca = this.usuarios.get(idDoador).getItens().get(id).getQuant();
 			
-			this.descritores.get(this.usuarios.get(idDoador).getItens().get(id).getDescricao()).diminuiQuant(diferenca);
+		this.descritores.get(this.usuarios.get(idDoador).getItens().get(id).getDescricao()).diminuiQuant(diferenca);
 			
-			this.usuarios.get(idDoador).getItens().remove(id);
-		}
+		this.usuarios.get(idDoador).getItens().remove(id);
+
 	}
 
 	public void lerReceptores(String caminho){
