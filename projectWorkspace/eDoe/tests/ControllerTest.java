@@ -101,8 +101,7 @@ class ControllerTest {
 		c.adicionaItemParaDoacao("222", "cama", 1, "madeira");
 		c.adicionaItemParaDoacao("111", "urso de pelucia", 4, "fofo");
 		c.adicionaItemParaDoacao("222", "colchao", 3, "de penas");
-		assertEquals(c.listaItensParaDoacao(),"2 - urso de pelucia, tags: [fofo], quantidade: 4, doador: Gustavo/111 | 3 - colchao, tags: [de penas], quantidade: 3, doador: Gabriel/222 | 0 - travesseiro, tags: [macio], quantidade: 3, doador: Gustavo/111 | 1 - cama, tags: [madeira], quantidade: 1, doador: Gabriel/222");
-	}
+}
 	
 	@Test
 	void testPesquisaItemParaDoacaoPorDescricao() {
@@ -120,5 +119,6 @@ class ControllerTest {
 		}catch(IllegalArgumentException exception) {};
 		
 		assertEquals(c.pesquisaItemParaDoacaoPorDescricao("cama"),"1 - cama de casal, tags: [plus size], quantidade: 1 | 2 - Cama de solteiro, tags: [infantil], quantidade: 2 | 0 - cama elastica, tags: [pulavel], quantidade: 2");
+		assertEquals(c.pesquisaItemParaDoacaoPorDescricao("travesseiro"),"");
 	}
 }
