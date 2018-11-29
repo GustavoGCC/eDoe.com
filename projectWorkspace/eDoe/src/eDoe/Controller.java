@@ -155,23 +155,26 @@ public class Controller {
 		
 		for (Item item : this.usuarios.get(idDoador).getItens().values()) {
 			if (item.getDescricao().toLowerCase().equals(descricaoItem.toLowerCase()) && item.getTags().equals(tags)) {
+				
+				if (!(this.usuarios.get(idDoador).getStatus().equals("receptor"))) {
+					int diferenca = quantidade - item.getQuant();
 					
-				int diferenca = quantidade - item.getQuant();
-					
-				this.descritores.get(descricaoItem).aumentaQuant(diferenca);
-									
+					this.descritores.get(descricaoItem).aumentaQuant(diferenca);
+				}
 				item.setQuant(quantidade);
 					
 				return item.getId();
-				}
+			}
+		}
+		if (!(this.usuarios.get(idDoador).getStatus().equals("receptor"))) {
+		
+			if (this.descritores.containsKey(descricaoItem.toLowerCase())) {
+			this.descritores.get(descricaoItem.toLowerCase()).aumentaQuant(quantidade);
 			}
 			
-		if (this.descritores.containsKey(descricaoItem.toLowerCase())) {
-			this.descritores.get(descricaoItem.toLowerCase()).aumentaQuant(quantidade);
-		}
-			
-		if (!this.descritores.containsKey(descricaoItem.toLowerCase())) {
+			if (!this.descritores.containsKey(descricaoItem.toLowerCase())) {
 			this.descritores.put(descricaoItem.toLowerCase(),new Descritor(descricaoItem.toLowerCase(),quantidade));
+			}
 		}
 			
 		this.usuarios.get(idDoador).getItens().put(this.idItens,new Item(descricaoItem.toLowerCase(), quantidade, tags,idItens));
@@ -380,7 +383,7 @@ public class Controller {
 				for (Item o : i.getItens().values()) {
 					String[] ArrayDeInformacoes = new String[2];
 					ArrayDeInformacoes[0] = "" + o.getId();
-					ArrayDeInformacoes[1] = " - " + o.getDescricaoETagsEQuantidades() + ", receptor: " + i.getNome() + "/" + i.getId() + " | ";
+					ArrayDeInformacoes[1] = " - " + o.getDescricaoETagsEQuantidades() + ", Receptor: " + i.getNome() + "/" + i.getId() + " | ";
 					listaParaImpressao.add(ArrayDeInformacoes);
 				}
 			}
@@ -392,6 +395,7 @@ public class Controller {
 			s += i[0] + i[1];
 		}
 		
+		s = s.substring(0, s.length() - 3);
 		s.trim();
 		
 		return s;
