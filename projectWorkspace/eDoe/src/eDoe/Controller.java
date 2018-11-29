@@ -19,7 +19,7 @@ import java.util.TreeMap;
 public class Controller {	
 	/**
 	 * Mapa de usuários do sistema, possui todos os usuários cadastrados no sistema, associados
-	 * ao seu identificador unico: seu id(String).
+	 * ao seu identificador único: seu id(String).
 	 */
 	private Map<String,Usuario> usuarios;
 	/**
@@ -28,16 +28,16 @@ public class Controller {
 	 */
 	private Map<String,Descritor> descritores;
 	/**
-	 * Contador para a adicão de itens.
+	 * Contador para a adição de itens.
 	 */
 	private int idItens;
 	/**
-	 * Realizador da validacao dos itens
+	 * Realizador da validação dos itens
 	 */
 	private Validacao validador;
 	/**
-	 * Construtor do controlador. Constroi o controlador a partir de um LinkedHashMap de usuarios (mantendo a ordem de insercao),
-	 * um TreeMap de descritores(Ordem alfabetica das chaves), põe o idItens igual a zero para iniciar o sistema e constrói um novo
+	 * Construtor do controlador. Constrói o controlador a partir de um LinkedHashMap de usuários (mantendo a ordem de inserção),
+	 * um TreeMap de descritores(Ordem alfabética das chaves), põe o idItens igual a zero para iniciar o sistema e constrói um novo
 	 * validador.
 	 */
 	public Controller() {
@@ -48,12 +48,12 @@ public class Controller {
 	}
 	/**
 	 * Adiciona um doador ao sistema, a partir de seu id, nome,email, celular e classe.
-	 * @param id identificador unico do usuario
+	 * @param id identificador único do usuario
 	 * @param nome nome do usuario
 	 * @param email email do usuario
 	 * @param celular celular do usuario
-	 * @param classe classe a qual o usuario pertence, como igreja, pessoa_fisica, ONG, entre outras.
-	 * @return o identificador unico do doador
+	 * @param classe classe à qual o usuario pertence, como igreja, pessoa_fisica, ONG, entre outras.
+	 * @return o identificador único do doador
 	 */
 	public String adicionaDoador(String id, String nome, String email, String celular, String classe) {
 		
@@ -64,9 +64,9 @@ public class Controller {
 		
 	}
 	/**
-	 * Pesquisa um usuario de acordo com seu id
+	 * Pesquisa um usuário de acordo com seu id
 	 * @param id id do usuário a ser pesquisado
-	 * @return a representacao em String do usuario
+	 * @return a representação em String do usuário
 	 */
 	public String pesquisaUsuarioPorId(String id) {
 		this.validador.validapesquisaUsuarioPorId(id, this.usuarios);
@@ -74,9 +74,9 @@ public class Controller {
 		return this.usuarios.get(id).toString();
 	}
 	/**
-	 * Pesquisa usuarios com um nome em especifico
+	 * Pesquisa usuários com um nome em específico
 	 * @param nome nome a ser pesquisado
-	 * @return retorna a representacao em String de todos os usuarios com esse nome em ordem de insercao
+	 * @return retorna a representação em String de todos os usuários com esse nome em ordem de inserção
 	 */
 	public String pesquisaUsuarioPorNome(String nome) {
 			
@@ -95,7 +95,7 @@ public class Controller {
 	}
 	/**
 	 * Atualiza informações do usuário: nome, email ou celular
-	 * @param id id do usuario a ser alterado
+	 * @param id id do usuário a ser alterado
 	 * @param nome novo nome do usuário
 	 * @param email novo email do usuário
 	 * @param celular novo celular do usuário
@@ -144,21 +144,16 @@ public class Controller {
 	}
 	/**
 	 * Adiciona um item para doação a um usuário
-<<<<<<< HEAD
-	 * @param idUsuario id do usuário que irá doar o item
-	 * @param descricaoItem descrição do item a ser doado
-=======
 	 * @param idDoador id do usuário que irá doar o item
-	 * @param descricaoItem descricao do item a ser doado
->>>>>>> b18d4f2842445c32cbbe5f2800b0009c960f4724
+	 * @param descricaoItem descrição do item a ser doado
 	 * @param quantidade quantidade do item a ser doado
 	 * @param tags tags do item a ser doado
 	 * @return o id do item a ser doado
 	 */
-	public int adicionaItem(String idUsuario, String descricaoItem, int quantidade, String tags) {
-		this.validador.validaAdicionaItem(idUsuario,descricaoItem,quantidade,tags,this.usuarios);
+	public int adicionaItem(String idDoador, String descricaoItem, int quantidade, String tags) {
+		this.validador.validaAdicionaItem(idDoador,descricaoItem,quantidade,tags,this.usuarios);
 		
-		for (Item item : this.usuarios.get(idUsuario).getItens().values()) {
+		for (Item item : this.usuarios.get(idDoador).getItens().values()) {
 			if (item.getDescricao().toLowerCase().equals(descricaoItem.toLowerCase()) && item.getTags().equals(tags)) {
 					
 				int diferenca = quantidade - item.getQuant();
@@ -179,7 +174,7 @@ public class Controller {
 			this.descritores.put(descricaoItem.toLowerCase(),new Descritor(descricaoItem.toLowerCase(),quantidade));
 		}
 			
-		this.usuarios.get(idUsuario).getItens().put(this.idItens,new Item(descricaoItem.toLowerCase(), quantidade, tags,idItens));
+		this.usuarios.get(idDoador).getItens().put(this.idItens,new Item(descricaoItem.toLowerCase(), quantidade, tags,idItens));
 			
 		this.idItens += 1;
 			
@@ -187,10 +182,10 @@ public class Controller {
 
 	}
 	/**
-	 * Exibe a representacao em String de um item do sistema
+	 * Exibe a representação em String de um item do sistema
 	 * @param id id do item a ser exibido
 	 * @param idDoador id do doador ao qual pertence o item
-	 * @return a representacao em String do item
+	 * @return a representação em String do item
 	 */
 	public String exibeItem(int id, String idDoador) {
 		this.validador.validaExibeItem(id,idDoador,this.usuarios);
@@ -200,57 +195,55 @@ public class Controller {
 	/**
 	 * Atualiza a quantidade ou as tags de um item a ser doado.
 	 * @param id id do item a ser modificado
-	 * @param idUsuario id do doador ao qual pertence o item
+	 * @param idDoador id do doador ao qual pertence o item
 	 * @param quantidade nova quantidade do item
 	 * @param tags novas tags do item
 	 * @return a nova representação em String do item
 	 */
-
-	public String atualizaItem(int id, String idUsuario, int quantidade, String tags) {
+	public String atualizaItem(int id, String idDoador, int quantidade, String tags) {
+		this.validador.validaAtualizaItem(id,idDoador,quantidade,tags,this.usuarios);
 		
-		this.validador.validaAtualizaItem(id,idUsuario,quantidade,tags,this.usuarios);
-
-		if (quantidade != 0) {
-				if (this.usuarios.get(idUsuario).getItens().get(id).getQuant() > quantidade) {
+			if (quantidade != 0) {
+				if (this.usuarios.get(idDoador).getItens().get(id).getQuant() > quantidade) {
 					
-					int diferenca = this.usuarios.get(idUsuario).getItens().get(id).getQuant() - quantidade;
+					int diferenca = this.usuarios.get(idDoador).getItens().get(id).getQuant() - quantidade;
 					
-					this.descritores.get(this.usuarios.get(idUsuario).getItens().get(id).getDescricao()).diminuiQuant(diferenca);
+					this.descritores.get(this.usuarios.get(idDoador).getItens().get(id).getDescricao()).diminuiQuant(diferenca);
 				}
 				
-				if (this.usuarios.get(idUsuario).getItens().get(id).getQuant() < quantidade) {
+				if (this.usuarios.get(idDoador).getItens().get(id).getQuant() < quantidade) {
 					
-					int diferenca = quantidade - this.usuarios.get(idUsuario).getItens().get(id).getQuant();
+					int diferenca = quantidade - this.usuarios.get(idDoador).getItens().get(id).getQuant();
 					
-					this.descritores.get(this.usuarios.get(idUsuario).getItens().get(id).getDescricao()).aumentaQuant(diferenca);
+					this.descritores.get(this.usuarios.get(idDoador).getItens().get(id).getDescricao()).aumentaQuant(diferenca);
 				}					
 					
-				this.usuarios.get(idUsuario).getItens().get(id).setQuant(quantidade);
+				this.usuarios.get(idDoador).getItens().get(id).setQuant(quantidade);
 				
 			}
 			
 		if (tags != null && !tags.trim().equals("")) {
 			
-			this.usuarios.get(idUsuario).getItens().get(id).setTags(tags);
+			this.usuarios.get(idDoador).getItens().get(id).setTags(tags);
 			
 		}
 		
-		return this.usuarios.get(idUsuario).getItens().get(id).toString();
+		return this.usuarios.get(idDoador).getItens().get(id).toString();
 			
 	}
 	/**
-	 * Remove um item para doacao
+	 * Remove um item para doação
 	 * @param id id do item a ser removido
-	 * @param idUsuario id do doador ao qual o item pertence
+	 * @param idDoador id do doador ao qual o item pertence
 	 */
-	public void removeItem(int id, String idUsuario) {
-		this.validador.validaRemoveItem(id,idUsuario,this.usuarios);
+	public void removeItem(int id, String idDoador) {
+		this.validador.validaRemoveItem(id,idDoador,this.usuarios);
 		
-		int diferenca = this.usuarios.get(idUsuario).getItens().get(id).getQuant();
+		int diferenca = this.usuarios.get(idDoador).getItens().get(id).getQuant();
 			
-		this.descritores.get(this.usuarios.get(idUsuario).getItens().get(id).getDescricao()).diminuiQuant(diferenca);
+		this.descritores.get(this.usuarios.get(idDoador).getItens().get(id).getDescricao()).diminuiQuant(diferenca);
 			
-		this.usuarios.get(idUsuario).getItens().remove(id);
+		this.usuarios.get(idDoador).getItens().remove(id);
 
 	}
 	/**
@@ -312,9 +305,6 @@ public class Controller {
 		String s="";
 		
 		for (Usuario i : usuarios.values()) {
-			if (!(i.getStatus().equals("doador"))) {
-				continue;
-			}
 			for (Item j : i.getItens().values()) {
 				lista.put(j, i);
 			}
@@ -338,18 +328,24 @@ public class Controller {
 	public String pesquisaItemParaDoacaoPorDescricao(String pesquisa) {
 		this.validador.validaPesquisaItemParaDoacaoPorDescricao(pesquisa);
 		
-		Map<String, Item> itensValidos=new TreeMap<>();
+		ArrayList<Item> itensValidos=new ArrayList<>();
+		
+		
 		
 		String s="";
 		
 		for (Usuario i : usuarios.values()) {
 			for (Item j : i.getItens().values())
 				if (j.getDescricao().toLowerCase().contains(pesquisa.toLowerCase())) {
-					itensValidos.put(j.getDescricao()+"|"+j.getId(), j);
+					itensValidos.add(j);
 			}
 		}
 		
-		for (Item i : itensValidos.values()) {
+		ComparadorPorDescricao comparador=new ComparadorPorDescricao();
+		
+		Collections.sort(itensValidos, comparador);
+		
+		for (Item i : itensValidos) {
 			s+=i.toString()+" | ";
 		}
 		
@@ -360,33 +356,6 @@ public class Controller {
 		}
 		
 		return s.trim();
-	}
-	public String listaItensNecessarios() {
-		
-		TreeMap<Item,Usuario> lista = new TreeMap<>();
-		String s="";
-		
-		for (Usuario i : usuarios.values()) {
-			if (!(i.getStatus().equals("receptor"))) {
-				continue;
-			}
-			for (Item j : i.getItens().values()) {
-				lista.put(j, i);
-			}
-		}
-		
-		for (Entry<Item,Usuario> entry : lista.entrySet()) {
-			s+=entry.getKey().toString() + ", Receptor: " + entry.getValue().getNome() + "/" + entry.getValue().getId() + " | ";
-		}
-		
-		s=s.trim();
-		
-		if (!s.equals("")) {
-			s=s.substring(0, s.length()-1);
-		}
-		
-		return s.trim();
-		
 	}
 	
 	
