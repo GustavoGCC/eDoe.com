@@ -1,6 +1,6 @@
 package eDoe;
 
-public class Item {
+public class Item implements Comparable<Item>{
 	private String descricao;
 	private int quantidade;
 	private String Tags;
@@ -82,6 +82,20 @@ public class Item {
 
 	public int getQuant() {
 		return this.quantidade;
+	}
+
+	@Override
+	public int compareTo(Item i) {
+		if (this.getQuant()>i.getQuant()) return -1;
+		
+		else if (this.getQuant()<i.getQuant()) return 1;
+		
+		else {
+			return this.getDescricao().compareTo(i.getDescricao());
+		}
+		
+		
+		
 	}
 
 	

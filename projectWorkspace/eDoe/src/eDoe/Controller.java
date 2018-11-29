@@ -1,8 +1,11 @@
 package eDoe;
 
+import java.awt.List;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -286,7 +289,39 @@ public class Controller {
 			s+=i.toString()+" | ";
 		}
 		
+		s=s.trim();
+		
+		if (!s.equals("")) {
+			s=s.substring(0, s.length()-1);
+		}
+		
 		return s.trim();
+		
+	}
+	
+	public <T> String listaItensParaDoacao() {
+		ArrayList<Item> lista = new ArrayList<>();
+		String s="";
+		
+		for (Usuario i : usuarios.values()) {
+			for (Item j : i.getItens().values()) {
+				lista.add(j);
+			}
+		}
+		
+		for (Item i : lista) {
+			s+=i.toString()+" | ";
+		}
+		
+		s=s.trim();
+		
+		if (!s.equals("")) {
+			s=s.substring(0, s.length()-1);
+		}
+		
+		return s.trim();
+		
+		
 		
 	}
 	
@@ -306,6 +341,12 @@ public class Controller {
 			if (i.contains(pesquisa.toLowerCase())) {
 				s+=i.toString()+" | ";
 			}
+		}
+		
+		s=s.trim();
+		
+		if (!s.equals("")) {
+			s=s.substring(0, s.length()-1);
 		}
 		
 		return s.trim();
