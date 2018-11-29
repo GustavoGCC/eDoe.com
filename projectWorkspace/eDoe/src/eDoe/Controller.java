@@ -127,7 +127,7 @@ public class Controller {
 		this.validador.validaRemoveUsario(id,this.usuarios);
 		
 			for (Item item : this.usuarios.get(id).getItens().values()) {
-				removeItemParaDoacao(item.getId(),id);
+				removeItem(item.getId(),id);
 			}
 			this.usuarios.remove(id);
 		
@@ -150,8 +150,8 @@ public class Controller {
 	 * @param tags tags do item a ser doado
 	 * @return o id do item a ser doado
 	 */
-	public int adicionaItemParaDoacao(String idDoador, String descricaoItem, int quantidade, String tags) {
-		this.validador.validaAdicionaItemParaDoacao(idDoador,descricaoItem,quantidade,tags,this.usuarios);
+	public int adicionaItem(String idDoador, String descricaoItem, int quantidade, String tags) {
+		this.validador.validaAdicionaItem(idDoador,descricaoItem,quantidade,tags,this.usuarios);
 		
 		for (Item item : this.usuarios.get(idDoador).getItens().values()) {
 			if (item.getDescricao().toLowerCase().equals(descricaoItem.toLowerCase()) && item.getTags().equals(tags)) {
@@ -200,8 +200,8 @@ public class Controller {
 	 * @param tags novas tags do item
 	 * @return a nova representação em String do item
 	 */
-	public String atualizaItemParaDoacao(int id, String idDoador, int quantidade, String tags) {
-		this.validador.validaAdicionaItemParaDoacao(id,idDoador,quantidade,tags,this.usuarios);
+	public String atualizaItem(int id, String idDoador, int quantidade, String tags) {
+		this.validador.validaAtualizaItem(id,idDoador,quantidade,tags,this.usuarios);
 		
 			if (quantidade != 0) {
 				if (this.usuarios.get(idDoador).getItens().get(id).getQuant() > quantidade) {
@@ -236,8 +236,8 @@ public class Controller {
 	 * @param id id do item a ser removido
 	 * @param idDoador id do doador ao qual o item pertence
 	 */
-	public void removeItemParaDoacao(int id, String idDoador) {
-		this.validador.validaRemoveItemParaDoacao(id,idDoador,this.usuarios);
+	public void removeItem(int id, String idDoador) {
+		this.validador.validaRemoveItem(id,idDoador,this.usuarios);
 		
 		int diferenca = this.usuarios.get(idDoador).getItens().get(id).getQuant();
 			
@@ -328,13 +328,25 @@ public class Controller {
 	public String pesquisaItemParaDoacaoPorDescricao(String pesquisa) {
 		this.validador.validaPesquisaItemParaDoacaoPorDescricao(pesquisa);
 		
+		ArrayList<Item> itensValidos=new ArrayList<>();
+		
+		
+		
 		String s="";
 		
 		for (Usuario i : usuarios.values()) {
 			for (Item j : i.getItens().values())
-			if (j.getDescricao().toLowerCase().contains(pesquisa.toLowerCase())) {
-				s+=j.toString()+ " | ";
+				if (j.getDescricao().toLowerCase().contains(pesquisa.toLowerCase())) {
+					itensValidos.add(j);
 			}
+		}
+		
+		ComparadorPorDescricao comparador=new ComparadorPorDescricao();
+		
+		Collections.sort(itensValidos, comparador);
+		
+		for (Item i : itensValidos) {
+			s+=i.toString()+" | ";
 		}
 		
 		s=s.trim();
