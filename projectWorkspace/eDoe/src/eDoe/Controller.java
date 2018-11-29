@@ -340,7 +340,7 @@ public class Controller {
 		}
 		
 		for (Item i : itensValidos.values()) {
-			s+=i.toString();
+			s+=i.toString()+" | ";
 		}
 		
 		s=s.trim();
