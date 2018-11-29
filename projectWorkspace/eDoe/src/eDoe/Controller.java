@@ -392,9 +392,7 @@ public class Controller {
 			s += i[0] + i[1];
 		}
 		
-		s.trim();
-		
-		return s;
+		return s.substring(0, s.length()-3);
 	}
 
 }

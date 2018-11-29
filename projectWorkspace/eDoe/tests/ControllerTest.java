@@ -119,7 +119,7 @@ class ControllerTest {
 		c.adicionaItem("222", "cama", 1, "madeira");
 		c.adicionaItem("111", "urso de pelucia", 4, "fofo");
 		c.adicionaItem("222", "colchao", 3, "de penas");
-		assertEquals(c.listaItensParaDoacao(),"2 - urso de pelucia, tags: [fofo], quantidade: 4 | 0 - travesseiro, tags: [macio], quantidade: 3 | 3 - colchao, tags: [de penas], quantidade: 3 | 1 - cama, tags: [madeira], quantidade: 1");
+		assertEquals(c.listaItensParaDoacao(),"2 - urso de pelucia, tags: [fofo], quantidade: 4, doador: Gustavo/111 | 3 - colchao, tags: [de penas], quantidade: 3, doador: Gabriel/222 | 0 - travesseiro, tags: [macio], quantidade: 3, doador: Gustavo/111 | 1 - cama, tags: [madeira], quantidade: 1, doador: Gabriel/222");
 
 }
 	
@@ -136,9 +136,98 @@ class ControllerTest {
 		}catch(IllegalArgumentException exception) {};
 		
 		try {c.pesquisaItemParaDoacaoPorDescricao(null);
+		}catch(NullPointerException exception) {};
+		
+		assertEquals(c.pesquisaItemParaDoacaoPorDescricao("travesseiro"),"");
+		assertEquals(c.pesquisaItemParaDoacaoPorDescricao("cama"),"1 - cama de casal, tags: [plus size], quantidade: 1 | 2 - cama de solteiro, tags: [infantil], quantidade: 1 | 0 - cama elastica, tags: [pulavel], quantidade: 2");
+	}
+	
+	@Test
+	void testAdicionaItemNecessario() {
+		Controller c = new Controller();
+		c.lerReceptores("arquivos_sistema/novosReceptores.csv");
+		c.lerReceptores("arquivos_sistema/atualizaReceptores.csv");
+		c.adicionaItem("84473712044", "cama", 2, "madeira");
+		
+		try {c.adicionaItem("","cama",3,"barata");
 		}catch(IllegalArgumentException exception) {};
 		
-		assertEquals(c.pesquisaItemParaDoacaoPorDescricao("cama"),"1 - cama de casal, tags: [plus size], quantidade: 1 | 2 - Cama de solteiro, tags: [infantil], quantidade: 2 | 0 - cama elastica, tags: [pulavel], quantidade: 2");
-		assertEquals(c.pesquisaItemParaDoacaoPorDescricao("travesseiro"),"");
+		try {c.adicionaItem(null,"cama",3,"barata");
+		}catch(IllegalArgumentException exception) {};
+		
+		try {c.adicionaItem("34473712041","",3,"barata");
+		}catch(IllegalArgumentException exception) {};
+		
+		try {c.adicionaItem("34473712041",null,3,"barata");
+		}catch(IllegalArgumentException exception) {};
+		
+		try {c.adicionaItem("34473712041","cama",-1,"barata");
+		}catch(IllegalArgumentException exception) {};
+		
+	}
+	
+	@Test
+	void testListaItensNecessarios() {
+		Controller c = new Controller();
+		c.lerReceptores("arquivos_sistema/novosReceptores.csv");
+		c.lerReceptores("arquivos_sistema/atualizaReceptores.csv");
+		c.adicionaItem("84473712044", "cama", 2, "madeira");
+		c.adicionaItem("84473712044", "carro", 1, "vermelho");
+		c.adicionaItem("80643201009", "sofa", 3, "couro");
+		assertEquals(c.listaItensNecessarios(),"0 - cama, tags: [madeira], quantidade: 2, receptor: Murilo Luiz Brito/84473712044 | 1 - carro, tags: [vermelho], quantidade: 1, receptor: Murilo Luiz Brito/84473712044 | 2 - sofa, tags: [couro], quantidade: 3, receptor: Tomas Otavio Lucas Teixeira/80643201009");
+	}
+	
+	@Test
+	void testAtualizaItemNecessario() {
+		Controller c = new Controller();
+		c.lerReceptores("arquivos_sistema/novosReceptores.csv");
+		c.lerReceptores("arquivos_sistema/atualizaReceptores.csv");
+		c.adicionaItem("84473712044", "cama", 2, "madeira");
+		c.adicionaItem("84473712044", "carro", 1, "vermelho");
+		c.adicionaItem("80643201009", "sofa", 3, "couro");
+		c.atualizaItem(0, "84473712044", 1, null);
+		assertEquals(c.exibeItem(0, "84473712044"),"0 - cama, tags: [madeira], quantidade: 1");
+		c.atualizaItem(1, "84473712044", 0, "azul");
+		assertEquals(c.exibeItem(1, "84473712044"),"1 - carro, tags: [azul], quantidade: 1");
+		
+		try {c.atualizaItem(0, "123", 1, "azul");
+		}catch(IllegalArgumentException exception) {};
+
+		try {c.atualizaItem(1, "84473712044", -1, "azul");
+		}catch(IllegalArgumentException exception) {};
+		
+		try {c.atualizaItem(2, null, 1, "azul");
+		}catch(IllegalArgumentException exception) {};
+		
+		try {c.atualizaItem(0, "", 1, "azul");
+		}catch(IllegalArgumentException exception) {};
+		
+	}
+	
+	@Test
+	void testRemocaoDeItemNecessario() {
+		Controller c = new Controller();
+		c.lerReceptores("arquivos_sistema/novosReceptores.csv");
+		c.lerReceptores("arquivos_sistema/atualizaReceptores.csv");
+		c.adicionaItem("84473712044", "cama", 2, "madeira");
+		c.adicionaItem("84473712044", "carro", 1, "vermelho");
+		c.adicionaItem("80643201009", "sofa", 3, "couro");
+		c.removeItem(0, "84473712044");
+		
+		try {c.removeItem(0, "");
+		} catch(IllegalArgumentException exception) {};
+		
+		try {c.removeItem(0, null);
+		} catch(IllegalArgumentException exception) {};
+		
+		try {c.removeItem(-1, "84473712044");
+		} catch(IllegalArgumentException exception) {};
+		
+		try {c.removeItem(0, "111");
+		} catch(IllegalArgumentException exception) {};
+		
+		try {c.removeItem(0, "58090077080");
+		} catch(IllegalArgumentException exception) {};
+	
 	}
 }
