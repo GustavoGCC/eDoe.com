@@ -243,7 +243,7 @@ public class Controller {
 			
 		this.descritores.get(this.usuarios.get(idDoador).getItens().get(id).getDescricao()).diminuiQuant(diferenca);
 			
-		this.usuarios.get(idDoador).getItens().remove(id);
+		this.usuarios.get(idDoador).getItens().remove(id); 
 
 	}
 	/**

@@ -46,7 +46,7 @@ class ControllerTest {
 		
 		try {c.pesquisaUsuarioPorId("999");
 		}catch(IllegalArgumentException exception) {
-			assertEquals(exception, "java.lang.IllegalArgumentException: Usuario nao encontrado: 999.");
+			assertEquals(exception.toString(), "java.lang.IllegalArgumentException: Usuario nao encontrado: 999.");
 		};
 	}
 	
@@ -63,23 +63,29 @@ class ControllerTest {
 	void testAdicionaItemParaDoacao() {
 		Controller c = new Controller();
 		c.adicionaDoador("123", "Lucas", "lucas@ccc. edu", "1010-2222", "PESSOA_FISICA");
-		c.adicionaDescritor("pesos");
-		c.adicionaItemParaDoacao("123", "pesos", 1, "par de halteres,3kg");
-		assertEquals(c.exibeItem(0 , "123"), "0 - pesos, tags: [par de halteres, 3kg], quantidade: 1");
-	}
-	
-	@Test
-	void testExibeItem() {
-		
+		c.adicionaDescritor("leite");
+		c.adicionaItemParaDoacao("123", "leite", 1, "lata,em po");
+		assertEquals(c.exibeItem(0 , "123"), "0 - leite, tags: [lata, em po], quantidade: 1");
 	}
 	
 	@Test
 	void testAtualizaItemParaDoacao() {
-		
+		Controller c = new Controller();
+		c.adicionaDoador("123", "Lucas", "lucas@ccc. edu", "1010-2222", "PESSOA_FISICA");
+		c.adicionaDescritor("leite");
+		c.adicionaItemParaDoacao("123", "leite", 1, "lata,em po");
+
+		c.atualizaItemParaDoacao(0, "123", 2, "caixa");
+		assertEquals(c.exibeItem(0, "123"), "0 - leite, tags: [caixa], quantidade: 2");
 	}
 	
 	@Test
 	void testRemoveItemParaDoacao() {
+		Controller c = new Controller();
+		c.adicionaDoador("123", "Lucas", "lucas@ccc. edu", "1010-2222", "PESSOA_FISICA");
+		c.adicionaDescritor("pesos");
+		
+		c.adicionaItemParaDoacao("123", "pesos", 1, "par de halteres,3kg");
 		
 	}
 	
