@@ -63,9 +63,20 @@ class ControllerTest {
 	void testAdicionaItemParaDoacao() {
 		Controller c = new Controller();
 		c.adicionaDoador("123", "Lucas", "lucas@ccc. edu", "1010-2222", "PESSOA_FISICA");
+<<<<<<< HEAD
 		c.adicionaDescritor("leite");
 		c.adicionaItemParaDoacao("123", "leite", 1, "lata,em po");
 		assertEquals(c.exibeItem(0 , "123"), "0 - leite, tags: [lata, em po], quantidade: 1");
+=======
+		c.adicionaDescritor("pesos");
+		c.adicionaItem("123", "pesos", 1, "par de halteres,3kg");
+		assertEquals(c.exibeItem(0 , "123"), "0 - pesos, tags: [par de halteres, 3kg], quantidade: 1");
+	}
+	
+	@Test
+	void testExibeItem() {
+		
+>>>>>>> 33cec01563dbaf0cd1c9a34963f8b824f98ffa05
 	}
 	
 	@Test
@@ -94,10 +105,10 @@ class ControllerTest {
 		Controller c = new Controller();
 		c.adicionaDescritor("travesseiro");
 		c.adicionaDoador("123", "Gustavo", "gustavo.campos@ccc.ufcg.edu.br", "9999-9999", "PESSOA_FISICA");
-		c.adicionaItemParaDoacao("123", "travesseiro", 3, "macio");
-		c.adicionaItemParaDoacao("123", "cama", 1, "madeira");
-		c.adicionaItemParaDoacao("123", "travesseiro", 2, "macio");
-		c.adicionaItemParaDoacao("123", "cama", 1, "com colchao");
+		c.adicionaItem("123", "travesseiro", 3, "macio");
+		c.adicionaItem("123", "cama", 1, "madeira");
+		c.adicionaItem("123", "travesseiro", 2, "macio");
+		c.adicionaItem("123", "cama", 1, "com colchao");
 		c.adicionaDescritor("xicara");
 		assertEquals(c.listaDescritorDeItensParaDoacao(),"2 - cama | 2 - travesseiro | 0 - xicara");
 	}
@@ -107,10 +118,12 @@ class ControllerTest {
 		Controller c = new Controller();
 		c.adicionaDoador("111", "Gustavo", "gustavo.campos", "9999-9999", "PESSOA_FISICA");
 		c.adicionaDoador("222", "Gabriel", "gabriel.campos", "8888-8888", "PESSOA_FISICA");
-		c.adicionaItemParaDoacao("111", "travesseiro", 3, "macio");
-		c.adicionaItemParaDoacao("222", "cama", 1, "madeira");
-		c.adicionaItemParaDoacao("111", "urso de pelucia", 4, "fofo");
-		c.adicionaItemParaDoacao("222", "colchao", 3, "de penas");
+		c.adicionaItem("111", "travesseiro", 3, "macio");
+		c.adicionaItem("222", "cama", 1, "madeira");
+		c.adicionaItem("111", "urso de pelucia", 4, "fofo");
+		c.adicionaItem("222", "colchao", 3, "de penas");
+		assertEquals(c.listaItensParaDoacao(),"2 - urso de pelucia, tags: [fofo], quantidade: 4 | 0 - travesseiro, tags: [macio], quantidade: 3 | 3 - colchao, tags: [de penas], quantidade: 3 | 1 - cama, tags: [madeira], quantidade: 1");
+
 }
 	
 	@Test
@@ -118,9 +131,9 @@ class ControllerTest {
 		Controller c = new Controller();
 		c.adicionaDoador("111", "Gustavo", "gustavo.campos", "9999-9999", "PESSOA_FISICA");
 		c.adicionaDoador("222", "Gabriel", "gabriel.campos", "8888-8888", "PESSOA_FISICA");
-		c.adicionaItemParaDoacao("111", "cama elastica", 2, "pulavel");
-		c.adicionaItemParaDoacao("222", "cama de casal", 1, "plus size");
-		c.adicionaItemParaDoacao("111", "Cama de solteiro", 1, "infantil");
+		c.adicionaItem("111", "cama elastica", 2, "pulavel");
+		c.adicionaItem("222", "cama de casal", 1, "plus size");
+		c.adicionaItem("111", "Cama de solteiro", 1, "infantil");
 		
 		try {c.pesquisaItemParaDoacaoPorDescricao("");
 		}catch(IllegalArgumentException exception) {};

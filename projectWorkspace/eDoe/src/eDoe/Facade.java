@@ -39,7 +39,7 @@ public class Facade {
 	}
 	
 	public int adicionaItemParaDoacao(String idDoador, String descricaoItem, int quantidade, String tags) {
-		return c.adicionaItemParaDoacao(idDoador,descricaoItem,quantidade,tags);
+		return c.adicionaItem(idDoador,descricaoItem,quantidade,tags);
 	}
 	
 	public String exibeItem(int id, String idDoador) {
@@ -47,11 +47,11 @@ public class Facade {
 	}
 	
 	public String atualizaItemParaDoacao(int id, String idDoador, int quantidade, String tags) {
-		return c.atualizaItemParaDoacao(id,idDoador,quantidade,tags);
+		return c.atualizaItem(id,idDoador,quantidade,tags);
 	}
 	
 	public void removeItemParaDoacao(int id, String idDoador) {
-		c.removeItemParaDoacao(id,idDoador);
+		c.removeItem(id,idDoador);
 	}
 	
 	public String listaDescritorDeItensParaDoacao() {
@@ -66,9 +66,24 @@ public class Facade {
 		return c.pesquisaItemParaDoacaoPorDescricao(desc);
 	}
 	
+	public int adicionaItemNecessario(String idReceptor, String descricaoItem, int quantidade, String tags) {
+		return c.adicionaItem(idReceptor,descricaoItem,quantidade,tags);
+	}
+	
+	public String listaItensNecessarios() {
+		return c.listaItensNecessarios();
+	}
+	
+	public String atualizaItemNecessario(int id, String idReceptor, int quantidade, String tags) {
+		return c.atualizaItem(id, idReceptor, quantidade, tags);
+	}
+	
+	public void removeItemNecessario(int id, String idReceptor) {
+		c.removeItem(id,idReceptor);
+	}
 	
 	public static void main(String[] args) {
-		args = new String[] {"eDoe.Facade","EasyAcceptTestes/use_case_1.txt","EasyAcceptTestes/use_case_2.txt","EasyAcceptTestes/use_case_3.txt"};
+		args = new String[] {"eDoe.Facade","EasyAcceptTestes/use_case_1.txt","EasyAcceptTestes/use_case_2.txt","EasyAcceptTestes/use_case_3.txt","EasyAcceptTestes/use_case_4.txt"};
 		EasyAccept.main(args);
 	}
 	
