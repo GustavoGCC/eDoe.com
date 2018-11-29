@@ -54,7 +54,7 @@ class ValidacaoTest {
 	}
 	
 	@Test
-	void testValidaAdicionaItemParaDoacao() {
+	void testValidaItemParaDoacao() {
 
 	}
 	
