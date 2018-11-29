@@ -328,13 +328,19 @@ public class Controller {
 	public String pesquisaItemParaDoacaoPorDescricao(String pesquisa) {
 		this.validador.validaPesquisaItemParaDoacaoPorDescricao(pesquisa);
 		
+		Map<String, Item> itensValidos=new TreeMap<>();
+		
 		String s="";
 		
 		for (Usuario i : usuarios.values()) {
 			for (Item j : i.getItens().values())
-			if (j.getDescricao().toLowerCase().contains(pesquisa.toLowerCase())) {
-				s+=j.toString()+ " | ";
+				if (j.getDescricao().toLowerCase().contains(pesquisa.toLowerCase())) {
+					itensValidos.put(j.getDescricao()+"|"+j.getId(), j);
 			}
+		}
+		
+		for (Item i : itensValidos.values()) {
+			s+=i.toString();
 		}
 		
 		s=s.trim();
