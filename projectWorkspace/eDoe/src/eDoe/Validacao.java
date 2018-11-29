@@ -9,7 +9,7 @@ public class Validacao {
 	}
 	
 	public void validaAdicionaDoador(String id, String nome, String email, String celular, String classe, Map<String,Usuario> usuarios) {
-		verificaNuloOuVazio(nome, "Entrada invalida: nome nao pode ser vazio ou nulo.");
+		verificaNuloOuVazio(nome, "Entrada invalida: nome nao pode ser vazio ou nulo."); 
 		
 		verificaNuloOuVazio(email, "Entrada invalida: email nao pode ser vazio ou nulo.");
 	

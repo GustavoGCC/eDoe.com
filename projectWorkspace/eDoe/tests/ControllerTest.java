@@ -5,63 +5,67 @@ import org.junit.jupiter.api.Test;
 import eDoe.Controller;
 
 class ControllerTest {
-
-	@Test
-	void test() {
-
-	}
 	
 	@Test
 	void testAdicionaDoador() {
 		Controller c = new Controller();
-		c.adicionaDoador("167", "Joao Victor", "joao.wanderley@ccc.ufcg.edu.br", "9999-8321", "PESSOA FISICA");
-		assertEquals(c.pesquisaUsuarioPorId("167"), "Joao Vitor/167, joao.wanderley@ccc.ufcg.edu.br, 9999-8321, status: doador");
+		c.adicionaDoador("167", "Joao Victor", "joao.wanderley@ccc.ufcg.edu.br", "9999-8321", "PESSOA_FISICA");
+		assertEquals(c.pesquisaUsuarioPorId("167"), "Joao Victor/167, joao.wanderley@ccc.ufcg.edu.br, 9999-8321, status: doador");
 	}
 	
 	@Test
 	void testPesquisaUsuarioPorId() {
 		Controller c = new Controller();
-		c.adicionaDoador("999", "Lucas Leal", "lucas.lucena@ccc.ufcg.edu.br", "2345-6780", "PESSOA FISICA");
+		c.adicionaDoador("999", "Lucas Leal", "lucas.lucena@ccc.ufcg.edu.br", "2345-6780", "PESSOA_FISICA");
 		assertEquals(c.pesquisaUsuarioPorId("999"), "Lucas Leal/999, lucas.lucena@ccc.ufcg.edu.br, 2345-6780, status: doador");
 	}
 	
 	@Test
 	void testPesquisaUsuarioPorNome() {
 		Controller c = new Controller();
-		c.adicionaDoador("100", "Daniel", "daniel.figueredo@ccc.ufcg.edu.br", "1010-2222", "PESSOA FISICA");
+		c.adicionaDoador("100", "Daniel", "daniel.figueredo@ccc.ufcg.edu.br", "1010-2222", "PESSOA_FISICA");
 		assertEquals(c.pesquisaUsuarioPorNome("Daniel"), "Daniel/100, daniel.figueredo@ccc.ufcg.edu.br, 1010-2222, status: doador");
 	}
 	
 	@Test
 	void testAtualizaUsuario() {
 		Controller c = new Controller();
-		c.adicionaDoador("166", "Joao Victo", "joao.wander@ccc.ufg.edu.br", "9999-8123", "PESSOA FISICA");
+		c.adicionaDoador("167", "Joao Vito", "joao.wander@ccc.ufg.edu.br", "9999-8123", "PESSOA_FISICA");
 		c.atualizaUsuario("167", "Joao Victor", "joao.wanderley@ccc.ufcg.edu.br", "9999-8321");
-		assertEquals(c.pesquisaUsuarioPorId("167"), "Joao Vitor/167, joao.wanderley@ccc.ufcg.edu.br, 9999-8321, status: doador");
+		assertEquals(c.pesquisaUsuarioPorId("167"), "Joao Victor/167, joao.wanderley@ccc.ufcg.edu.br, 9999-8321, status: doador");
 	}
 	
 	@Test
 	void testRemoveUsuario() {
 		Controller c = new Controller();
-		c.adicionaDoador("167", "Joao Victor", "joao.wanderley@ccc.ufcg.edu.br", "9999-8321", "PESSOA FISICA");
-		c.adicionaDoador("999", "Lucas Leal", "lucas.lucena@ccc.ufcg.edu.br", "2345-6780", "PESSOA FISICA");
-		c.adicionaDoador("100", "Daniel", "daniel.figueredo@ccc.ufcg.edu.br", "1010-2222", "PESSOA FISICA");
+		c.adicionaDoador("167", "Joao Victor", "joao.wanderley@ccc.ufcg.edu.br", "9999-8321", "PESSOA_FISICA");
+		c.adicionaDoador("999", "Lucas Leal", "lucas.lucena@ccc.ufcg.edu.br", "2345-6780", "PESSOA_FISICA");
+		c.adicionaDoador("100", "Daniel", "daniel.figueredo@ccc.ufcg.edu.br", "1010-2222", "PESSOA_FISICA");
 		c.removeUsuario("999");
-		assertThrows(IllegalArgumentException.class,()->{c.pesquisaUsuarioPorId("999");} );
+		assertThrows(IllegalArgumentException.class, ()->{c.pesquisaUsuarioPorId("999");} );
 		
 		try {c.pesquisaUsuarioPorId("999");
 		}catch(IllegalArgumentException exception) {
-			assertEquals(exception, "Usuario nao encontrado: 999.");
+			assertEquals(exception, "java.lang.IllegalArgumentException: Usuario nao encontrado: 999.");
 		};
 	}
 	
 	@Test
 	void testAdicionaDescritor() {
+		Controller c = new Controller();
+		c.adicionaDescritor("cadeira de rodas");
+		//assertEquals(c.des, "cadeira de rodas");
+		
 		
 	}
 	
 	@Test
 	void testAdicionaItemParaDoacao() {
+		Controller c = new Controller();
+		c.adicionaDoador("123", "Lucas", "lucas@ccc. edu", "1010-2222", "PESSOA_FISICA");
+		c.adicionaDescritor("pesos");
+		c.adicionaItemParaDoacao("123", "pesos", 1, "par de halteres,3kg");
+		assertEquals(c.exibeItem(0 , "123"), "0 - pesos, tags: [par de halteres, 3kg], quantidade: 1");
 	}
 	
 	@Test

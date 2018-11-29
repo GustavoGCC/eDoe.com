@@ -104,7 +104,7 @@ public class Controller {
 	public String atualizaUsuario(String id, String nome, String email, String celular) {
 			this.validador.validaAtualizaUsuario(id,nome,email,celular,this.usuarios);
 			
-			if (nome != null && !nome.trim().equals("")) {
+			if (nome != null && !nome.trim().equals("")) { 
 				this.usuarios.get(id).setNome(nome);
 			}
 			
