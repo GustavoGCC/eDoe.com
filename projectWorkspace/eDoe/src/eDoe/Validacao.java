@@ -72,7 +72,7 @@ public class Validacao {
 		
 	}
 
-	public void validaAdicionaItemParaDoacao(String idDoador, String descricaoItem, int quantidade, String tags, Map<String, Usuario> usuarios) {
+	public void validaAdicionaItem(String idDoador, String descricaoItem, int quantidade, String tags, Map<String, Usuario> usuarios) {
 		if (descricaoItem == null || descricaoItem.trim().equals("")) {throw new IllegalArgumentException("Entrada invalida: descricao nao pode ser vazia ou nula.");}
 		
 		if (quantidade <= 0) {throw new IllegalArgumentException("Entrada invalida: quantidade deve ser maior que zero.");}
@@ -83,29 +83,29 @@ public class Validacao {
 		
 	}
 
-	public void validaAdicionaItemParaDoacao(int id, String idDoador, int quantidade, String tags,Map<String, Usuario> usuarios) {
+	public void validaAtualizaItem(int id, String idUsuario, int quantidade, String tags,Map<String, Usuario> usuarios) {
 		if (id < 0) {throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");}
 		
-		if (idDoador == null || idDoador.trim().equals("")) {throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");}
+		if (idUsuario == null || idUsuario.trim().equals("")) {throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");}
 		
-		if (!usuarios.containsKey(idDoador)) {throw new IllegalArgumentException("Usuario nao encontrado: " + idDoador + ".");}
+		if (!usuarios.containsKey(idUsuario)) {throw new IllegalArgumentException("Usuario nao encontrado: " + idUsuario + ".");}
 		
-		if (!usuarios.get(idDoador).getItens().containsKey(id)) {throw new IllegalArgumentException("Item nao encontrado: " + id + ".");}
+		if (!usuarios.get(idUsuario).getItens().containsKey(id)) {throw new IllegalArgumentException("Item nao encontrado: " + id + ".");}
 		
 	}
 
-	public void validaRemoveItemParaDoacao(int id, String idDoador, Map<String, Usuario> usuarios) {
+	public void validaRemoveItem(int id, String idUsuario, Map<String, Usuario> usuarios) {
 		if (id < 0) {throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");}
 		
-		if (idDoador == null || idDoador.trim().equals("")) {throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");}
+		if (idUsuario == null || idUsuario.trim().equals("")) {throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");}
 		
-		if (!usuarios.containsKey(idDoador)) {throw new IllegalArgumentException("Usuario nao encontrado: " + idDoador + ".");}
+		if (!usuarios.containsKey(idUsuario)) {throw new IllegalArgumentException("Usuario nao encontrado: " + idUsuario + ".");}
 		
-		if (usuarios.get(idDoador).getItens().size() == 0) {
+		if (usuarios.get(idUsuario).getItens().size() == 0) {
 			throw new IllegalArgumentException("O Usuario nao possui itens cadastrados.");
 		}
 		
-		if (!usuarios.get(idDoador).getItens().containsKey(id)) {throw new IllegalArgumentException("Item nao encontrado: " + id + ".");}
+		if (!usuarios.get(idUsuario).getItens().containsKey(id)) {throw new IllegalArgumentException("Item nao encontrado: " + id + ".");}
 		
 	}
 

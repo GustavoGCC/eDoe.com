@@ -64,7 +64,7 @@ class ControllerTest {
 		Controller c = new Controller();
 		c.adicionaDoador("123", "Lucas", "lucas@ccc. edu", "1010-2222", "PESSOA_FISICA");
 		c.adicionaDescritor("pesos");
-		c.adicionaItemParaDoacao("123", "pesos", 1, "par de halteres,3kg");
+		c.adicionaItem("123", "pesos", 1, "par de halteres,3kg");
 		assertEquals(c.exibeItem(0 , "123"), "0 - pesos, tags: [par de halteres, 3kg], quantidade: 1");
 	}
 	
@@ -88,10 +88,10 @@ class ControllerTest {
 		Controller c = new Controller();
 		c.adicionaDescritor("travesseiro");
 		c.adicionaDoador("123", "Gustavo", "gustavo.campos@ccc.ufcg.edu.br", "9999-9999", "PESSOA_FISICA");
-		c.adicionaItemParaDoacao("123", "travesseiro", 3, "macio");
-		c.adicionaItemParaDoacao("123", "cama", 1, "madeira");
-		c.adicionaItemParaDoacao("123", "travesseiro", 2, "macio");
-		c.adicionaItemParaDoacao("123", "cama", 1, "com colchao");
+		c.adicionaItem("123", "travesseiro", 3, "macio");
+		c.adicionaItem("123", "cama", 1, "madeira");
+		c.adicionaItem("123", "travesseiro", 2, "macio");
+		c.adicionaItem("123", "cama", 1, "com colchao");
 		c.adicionaDescritor("xicara");
 		assertEquals(c.listaDescritorDeItensParaDoacao(),"2 - cama | 2 - travesseiro | 0 - xicara");
 	}
@@ -101,10 +101,10 @@ class ControllerTest {
 		Controller c = new Controller();
 		c.adicionaDoador("111", "Gustavo", "gustavo.campos", "9999-9999", "PESSOA_FISICA");
 		c.adicionaDoador("222", "Gabriel", "gabriel.campos", "8888-8888", "PESSOA_FISICA");
-		c.adicionaItemParaDoacao("111", "travesseiro", 3, "macio");
-		c.adicionaItemParaDoacao("222", "cama", 1, "madeira");
-		c.adicionaItemParaDoacao("111", "urso de pelucia", 4, "fofo");
-		c.adicionaItemParaDoacao("222", "colchao", 3, "de penas");
+		c.adicionaItem("111", "travesseiro", 3, "macio");
+		c.adicionaItem("222", "cama", 1, "madeira");
+		c.adicionaItem("111", "urso de pelucia", 4, "fofo");
+		c.adicionaItem("222", "colchao", 3, "de penas");
 }
 	
 	@Test
@@ -112,9 +112,9 @@ class ControllerTest {
 		Controller c = new Controller();
 		c.adicionaDoador("111", "Gustavo", "gustavo.campos", "9999-9999", "PESSOA_FISICA");
 		c.adicionaDoador("222", "Gabriel", "gabriel.campos", "8888-8888", "PESSOA_FISICA");
-		c.adicionaItemParaDoacao("111", "cama elastica", 2, "pulavel");
-		c.adicionaItemParaDoacao("222", "cama de casal", 1, "plus size");
-		c.adicionaItemParaDoacao("111", "Cama de solteiro", 1, "infantil");
+		c.adicionaItem("111", "cama elastica", 2, "pulavel");
+		c.adicionaItem("222", "cama de casal", 1, "plus size");
+		c.adicionaItem("111", "Cama de solteiro", 1, "infantil");
 		
 		try {c.pesquisaItemParaDoacaoPorDescricao("");
 		}catch(IllegalArgumentException exception) {};
