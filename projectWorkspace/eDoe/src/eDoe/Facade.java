@@ -62,8 +62,8 @@ public class Facade {
 		return c.listaItensParaDoacao();
 	}
 	
-	public String pesquisaItemParaDoacaoPorDescricao(String pesquisa) {
-		return c.pesquisaItemParaDoacaoPorDescricao(pesquisa);
+	public String pesquisaItemParaDoacaoPorDescricao(String desc) {
+		return c.pesquisaItemParaDoacaoPorDescricao(desc);
 	}
 	
 	

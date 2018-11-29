@@ -117,6 +117,17 @@ public class Validacao {
 		if (!usuarios.get(idDoador).getItens().containsKey(id)) {throw new IllegalArgumentException("Item nao encontrado: " + id + ".");}
 		
 	}
+
+	public void validaPesquisaItemParaDoacaoPorDescricao(String pesquisa) {
+		if (pesquisa==null) {
+			throw new NullPointerException("Entrada invalida: texto da pesquisa nao pode ser vazio ou nulo.");
+		}
+		
+		if (pesquisa.trim().equals("")) {
+			throw new IllegalArgumentException("Entrada invalida: texto da pesquisa nao pode ser vazio ou nulo.");
+		}
+		
+	}
 	
 	
 

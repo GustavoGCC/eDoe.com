@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.TreeMap;
 /**
@@ -300,19 +301,17 @@ public class Controller {
 	}
 	
 	public String listaItensParaDoacao() {
-		ArrayList<Item> lista = new ArrayList<>();
+		TreeMap<Item,Usuario> lista = new TreeMap<>();
 		String s="";
 		
 		for (Usuario i : usuarios.values()) {
 			for (Item j : i.getItens().values()) {
-				lista.add(j);
+				lista.put(j, i);
 			}
 		}
 		
-		Collections.sort(lista);
-		
-		for (Item i : lista) {
-			s+=i.toString()+" | ";
+		for (Entry<Item,Usuario> entry : lista.entrySet()) {
+			s+=entry.getKey().toString() + ", doador: " + entry.getValue().getNome() + "/" + entry.getValue().getId() + " | ";
 		}
 		
 		s=s.trim();
@@ -323,25 +322,18 @@ public class Controller {
 		
 		return s.trim();
 		
-		
-		
 	}
 	
 	
 	public String pesquisaItemParaDoacaoPorDescricao(String pesquisa) {
-		if (pesquisa==null) {
-			throw new NullPointerException("Entrada invalida: texto da pesquisa nao pode ser vazio ou nulo.");
-		}
-		
-		if (pesquisa.trim()=="") {
-			throw new IllegalArgumentException("Entrada invalida: texto da pesquisa nao pode ser vazio ou nulo.");
-		}
+		this.validador.validaPesquisaItemParaDoacaoPorDescricao(pesquisa);
 		
 		String s="";
 		
-		for (String i : descritores.keySet()) {
-			if (i.contains(pesquisa.toLowerCase())) {
-				s+=i.toString()+" | ";
+		for (Usuario i : usuarios.values()) {
+			for (Item j : i.getItens().values())
+			if (j.getDescricao().toLowerCase().contains(pesquisa.toLowerCase())) {
+				s+=j.toString()+ " | ";
 			}
 		}
 		

@@ -29,4 +29,9 @@ public class Descritor {
 	public void aumentaQuant(int quant) {
 		this.quant += quant;
 	}
+	
+	@Override
+	public String toString() {
+		return this.quant + " - " + this.descricao;
+	}
 }
