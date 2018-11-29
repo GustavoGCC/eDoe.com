@@ -1,13 +1,28 @@
 package eDoe;
 
 import java.util.Map;
-
+/**
+ * Classe criada para guardar as validacoes do controlador com o objetivo de aumentar a coesao
+ * @author Gustavo Gurjão Camargo Campos ,Joao Victor Teodulo Wanderley 
+ *
+ */
 public class Validacao {
-	
+	/**
+	 * Construtor que constroi a classe sem nenhum atributo
+	 */
 	public Validacao() {
 		
 	}
-	
+	/**
+	 * Metodo criado para validar o metodo adicionaDoador, checa se o id,nome,email,celular ou classe sao vazios ou nulos(caso sim joga uma excecao)
+	 *   , ve se a classe e uma das classes aceitaveis(caso nao joga excecao) e por ultimo ve se o id ja foi registrado(caso sim joga uma excecao)
+	 * @param id
+	 * @param nome
+	 * @param email
+	 * @param celular
+	 * @param classe
+	 * @param usuarios
+	 */
 	public void validaAdicionaDoador(String id, String nome, String email, String celular, String classe, Map<String,Usuario> usuarios) {
 		verificaNuloOuVazio(nome, "Entrada invalida: nome nao pode ser vazio ou nulo."); 
 		

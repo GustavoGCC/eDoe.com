@@ -13,7 +13,7 @@ import java.util.Scanner;
 import java.util.TreeMap;
 /**
  * Controlador do sistema, possui todas as informações e todos os métodos para o sistema funcionar.
- * @author Gustavo Gurjão Camargo Campos, Daniel de Matos Figueredo.
+ * @author Gustavo Gurjão Camargo Campos, Daniel de Matos Figueredo, Joao Victor Teodulo Wanderley.
  *
  */
 public class Controller {	
@@ -282,7 +282,10 @@ public class Controller {
 		sc.close();
 		
 	}
-	
+	/**
+	 * Percorre o map "descritores" e retorna o toString() de todos eles separados por " | "
+	 * @return o toString() de todos os descritores separados por " | "
+	 */
 	public String listaDescritorDeItensParaDoacao() {
 		String s="";
 		
@@ -299,7 +302,10 @@ public class Controller {
 		return s.trim();
 		
 	}
-	
+	/**
+	 * Percorre os itens de todos os doadores guardando eles em um TreeMap,deixando todos ordenados automaticamente, e retorna sua representacao em ordem de quantidade, maior para menor
+	 * @return representacao,em string, de todos os itens de todos os doadores, em ordem de quantidade decrescente, no formato : "idDoItem" - "descritor", tags: ["tags"], quantidade: "quantidade", doador: "nomeDoDoador"/"idDoUsuario"\ | 
+	 */
 	public String listaItensParaDoacao() {
 		TreeMap<Item,Usuario> lista = new TreeMap<>();
 		String s="";
@@ -324,7 +330,11 @@ public class Controller {
 		
 	}
 	
-	
+	/**
+	 * Pesquisa um item pela sua descricao e guarda em um TreeMap que automaticamente deixa ordenado em ordem alfabetica
+	 * @param pesquisa termo que vai ser pesquisado na descricao dos itens
+	 * @return todos os itens cuja descricao contem o termo pesquisado no formato :"idDoItem" - "descritor", tags: ["tags"], quantidade: "quantidade" | 
+	 */
 	public String pesquisaItemParaDoacaoPorDescricao(String pesquisa) {
 		this.validador.validaPesquisaItemParaDoacaoPorDescricao(pesquisa);
 		
@@ -352,6 +362,12 @@ public class Controller {
 		return s.trim();
 	}
 	
+	/**
+	 * Percorre os itens de todos os doadores e retorna sua representacao em ordem de id do item, de menor id para maior id
+	 *   consegue isso criando um ArrayList que guarda arrays de String em que o primeiro elemento e o id de item e o resto e o resultado de getDescricaoETagsEQuantidades()
+	 *   o ArrayList e entao ordenado e seus valores colocados em uma variavel que e retornada.
+	 * @return representacao, em string, de todos os itens de todos os receptores, em ordem de id crescente, no formato : "idDoItem" - "descritor", tags: ["tags"], quantidade: "quantidade", receptor: "nomeDoReceptor"/"idDoUsuario"\ | 
+	 */
 	public String listaItensNecessarios() {
 		
 		ArrayList<String[]> listaParaImpressao = new ArrayList<>();
