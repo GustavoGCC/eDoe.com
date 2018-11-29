@@ -74,8 +74,8 @@ public class Facade {
 		return c.listaItensNecessarios();
 	}
 	
-	public String atualizaItemNecessario(int id, String idReceptor, int quantidade, String tags) {
-		return c.atualizaItem(id, idReceptor, quantidade, tags);
+	public String atualizaItemNecessario(String idReceptor,int idItem, int novaQuantidade, String novasTags) {
+		return c.atualizaItem(idItem, idReceptor, novaQuantidade, novasTags);
 	}
 	
 	public void removeItemNecessario(int id, String idReceptor) {

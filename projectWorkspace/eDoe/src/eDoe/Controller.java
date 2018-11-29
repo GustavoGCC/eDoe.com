@@ -328,24 +328,18 @@ public class Controller {
 	public String pesquisaItemParaDoacaoPorDescricao(String pesquisa) {
 		this.validador.validaPesquisaItemParaDoacaoPorDescricao(pesquisa);
 		
-		ArrayList<Item> itensValidos=new ArrayList<>();
-		
-		
+		Map<String, Item> itensValidos=new TreeMap<>();
 		
 		String s="";
 		
 		for (Usuario i : usuarios.values()) {
 			for (Item j : i.getItens().values())
 				if (j.getDescricao().toLowerCase().contains(pesquisa.toLowerCase())) {
-					itensValidos.add(j);
+					itensValidos.put(j.getDescricao()+"|"+j.getId(), j);
 			}
 		}
 		
-		ComparadorPorDescricao comparador=new ComparadorPorDescricao();
-		
-		Collections.sort(itensValidos, comparador);
-		
-		for (Item i : itensValidos) {
+		for (Item i : itensValidos.values()) {
 			s+=i.toString()+" | ";
 		}
 		
@@ -358,9 +352,33 @@ public class Controller {
 		return s.trim();
 	}
 	
-	
-	
-	
-	
+	public String listaItensNecessarios() {
+		
+		ArrayList<String[]> listaParaImpressao = new ArrayList<>();
+		String s="";
+		
+		for (Usuario i : usuarios.values()) {
+			if (!(i.getStatus().equals("receptor"))) {
+				continue;
+			} else {
+				for (Item o : i.getItens().values()) {
+					String[] ArrayDeInformacoes = new String[2];
+					ArrayDeInformacoes[0] = "" + o.getId();
+					ArrayDeInformacoes[1] = " - " + o.getDescricaoETagsEQuantidades() + ", receptor: " + i.getNome() + "/" + i.getId() + " | ";
+					listaParaImpressao.add(ArrayDeInformacoes);
+				}
+			}
+		}
+		
+		Collections.sort(listaParaImpressao, new ComparadorDeArrayDeInformacoesDeItem());
+		
+		for (String[] i: listaParaImpressao) {
+			s += i[0] + i[1];
+		}
+		
+		s.trim();
+		
+		return s;
+	}
 
 }
