@@ -166,11 +166,6 @@ public class Item implements Comparable<Item>{
 		
 		else {
 			return this.getDescricao().compareTo(i.getDescricao());
-		}
-		
-		
-		
+		}	
 	}
-
-	
 }

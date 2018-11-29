@@ -60,43 +60,40 @@ class ControllerTest {
 	}
 	
 	@Test
-	void testAdicionaItemParaDoacao() {
+	void testAdicionaItem() {
 		Controller c = new Controller();
 		c.adicionaDoador("123", "Lucas", "lucas@ccc. edu", "1010-2222", "PESSOA_FISICA");
-<<<<<<< HEAD
+
 		c.adicionaDescritor("leite");
-		c.adicionaItemParaDoacao("123", "leite", 1, "lata,em po");
+		c.adicionaItem("123", "leite", 1, "lata,em po");
 		assertEquals(c.exibeItem(0 , "123"), "0 - leite, tags: [lata, em po], quantidade: 1");
-=======
+
 		c.adicionaDescritor("pesos");
 		c.adicionaItem("123", "pesos", 1, "par de halteres,3kg");
-		assertEquals(c.exibeItem(0 , "123"), "0 - pesos, tags: [par de halteres, 3kg], quantidade: 1");
+		assertEquals(c.exibeItem(1 , "123"), "1 - pesos, tags: [par de halteres, 3kg], quantidade: 1");
 	}
 	
 	@Test
-	void testExibeItem() {
-		
->>>>>>> 33cec01563dbaf0cd1c9a34963f8b824f98ffa05
-	}
-	
-	@Test
-	void testAtualizaItemParaDoacao() {
+	void testAtualizaItem() {
 		Controller c = new Controller();
 		c.adicionaDoador("123", "Lucas", "lucas@ccc. edu", "1010-2222", "PESSOA_FISICA");
 		c.adicionaDescritor("leite");
-		c.adicionaItemParaDoacao("123", "leite", 1, "lata,em po");
+		c.adicionaItem("123", "leite", 1, "lata,em po");
 
-		c.atualizaItemParaDoacao(0, "123", 2, "caixa");
+		c.atualizaItem(0, "123", 2, "caixa");
 		assertEquals(c.exibeItem(0, "123"), "0 - leite, tags: [caixa], quantidade: 2");
 	}
 	
 	@Test
-	void testRemoveItemParaDoacao() {
+	void testRemoveItem() {
 		Controller c = new Controller();
 		c.adicionaDoador("123", "Lucas", "lucas@ccc. edu", "1010-2222", "PESSOA_FISICA");
 		c.adicionaDescritor("pesos");
 		
-		c.adicionaItemParaDoacao("123", "pesos", 1, "par de halteres,3kg");
+		c.adicionaItem("123", "leite", 2, "caixa");
+		c.adicionaItem("123", "leite", 1, "lata,em po");
+		c.removeItem(0, "123");
+	
 		
 	}
 	
