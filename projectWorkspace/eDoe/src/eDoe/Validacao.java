@@ -83,7 +83,7 @@ public class Validacao {
 		
 	}
 
-	public void validaAdicionaItemParaDoacao(int id, String idDoador, int quantidade, String tags,Map<String, Usuario> usuarios) {
+	public void validaAtualizaItemParaDoacao(int id, String idDoador, int quantidade, String tags,Map<String, Usuario> usuarios) {
 		if (id < 0) {throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");}
 		
 		if (idDoador == null || idDoador.trim().equals("")) {throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");}

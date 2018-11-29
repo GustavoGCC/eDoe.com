@@ -105,6 +105,7 @@ class ControllerTest {
 		c.adicionaItemParaDoacao("222", "cama", 1, "madeira");
 		c.adicionaItemParaDoacao("111", "urso de pelucia", 4, "fofo");
 		c.adicionaItemParaDoacao("222", "colchao", 3, "de penas");
+		assertEquals(c.listaItensParaDoacao(),"2 - urso de pelucia, tags: [fofo], quantidade: 4 | 0 - travesseiro, tags: [macio], quantidade: 3 | 3 - colchao, tags: [de penas], quantidade: 3 | 1 - cama, tags: [madeira], quantidade: 1");
 }
 	
 	@Test

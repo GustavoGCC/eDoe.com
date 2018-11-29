@@ -19,7 +19,7 @@ import java.util.TreeMap;
 public class Controller {	
 	/**
 	 * Mapa de usuários do sistema, possui todos os usuários cadastrados no sistema, associados
-	 * ao seu identificador único: seu id(String).
+	 * ao seu identificador unico: seu id(String).
 	 */
 	private Map<String,Usuario> usuarios;
 	/**
@@ -28,16 +28,16 @@ public class Controller {
 	 */
 	private Map<String,Descritor> descritores;
 	/**
-	 * Contador para a adição de itens.
+	 * Contador para a adicão de itens.
 	 */
 	private int idItens;
 	/**
-	 * Realizador da validação dos itens
+	 * Realizador da validacao dos itens
 	 */
 	private Validacao validador;
 	/**
-	 * Construtor do controlador. Constrói o controlador a partir de um LinkedHashMap de usuários (mantendo a ordem de inserção),
-	 * um TreeMap de descritores(Ordem alfabética das chaves), põe o idItens igual a zero para iniciar o sistema e constrói um novo
+	 * Construtor do controlador. Constroi o controlador a partir de um LinkedHashMap de usuarios (mantendo a ordem de insercao),
+	 * um TreeMap de descritores(Ordem alfabetica das chaves), põe o idItens igual a zero para iniciar o sistema e constrói um novo
 	 * validador.
 	 */
 	public Controller() {
@@ -48,12 +48,12 @@ public class Controller {
 	}
 	/**
 	 * Adiciona um doador ao sistema, a partir de seu id, nome,email, celular e classe.
-	 * @param id identificador único do usuario
+	 * @param id identificador unico do usuario
 	 * @param nome nome do usuario
 	 * @param email email do usuario
 	 * @param celular celular do usuario
-	 * @param classe classe à qual o usuario pertence, como igreja, pessoa_fisica, ONG, entre outras.
-	 * @return o identificador único do doador
+	 * @param classe classe a qual o usuario pertence, como igreja, pessoa_fisica, ONG, entre outras.
+	 * @return o identificador unico do doador
 	 */
 	public String adicionaDoador(String id, String nome, String email, String celular, String classe) {
 		
@@ -64,9 +64,9 @@ public class Controller {
 		
 	}
 	/**
-	 * Pesquisa um usuário de acordo com seu id
+	 * Pesquisa um usuario de acordo com seu id
 	 * @param id id do usuário a ser pesquisado
-	 * @return a representação em String do usuário
+	 * @return a representacao em String do usuario
 	 */
 	public String pesquisaUsuarioPorId(String id) {
 		this.validador.validapesquisaUsuarioPorId(id, this.usuarios);
@@ -74,9 +74,9 @@ public class Controller {
 		return this.usuarios.get(id).toString();
 	}
 	/**
-	 * Pesquisa usuários com um nome em específico
+	 * Pesquisa usuarios com um nome em especifico
 	 * @param nome nome a ser pesquisado
-	 * @return retorna a representação em String de todos os usuários com esse nome em ordem de inserção
+	 * @return retorna a representacao em String de todos os usuarios com esse nome em ordem de insercao
 	 */
 	public String pesquisaUsuarioPorNome(String nome) {
 			
@@ -95,7 +95,7 @@ public class Controller {
 	}
 	/**
 	 * Atualiza informações do usuário: nome, email ou celular
-	 * @param id id do usuário a ser alterado
+	 * @param id id do usuario a ser alterado
 	 * @param nome novo nome do usuário
 	 * @param email novo email do usuário
 	 * @param celular novo celular do usuário
@@ -145,7 +145,7 @@ public class Controller {
 	/**
 	 * Adiciona um item para doação a um usuário
 	 * @param idDoador id do usuário que irá doar o item
-	 * @param descricaoItem descrição do item a ser doado
+	 * @param descricaoItem descricao do item a ser doado
 	 * @param quantidade quantidade do item a ser doado
 	 * @param tags tags do item a ser doado
 	 * @return o id do item a ser doado
@@ -182,10 +182,10 @@ public class Controller {
 
 	}
 	/**
-	 * Exibe a representação em String de um item do sistema
+	 * Exibe a representacao em String de um item do sistema
 	 * @param id id do item a ser exibido
 	 * @param idDoador id do doador ao qual pertence o item
-	 * @return a representação em String do item
+	 * @return a representacao em String do item
 	 */
 	public String exibeItem(int id, String idDoador) {
 		this.validador.validaExibeItem(id,idDoador,this.usuarios);
@@ -201,7 +201,7 @@ public class Controller {
 	 * @return a nova representação em String do item
 	 */
 	public String atualizaItemParaDoacao(int id, String idDoador, int quantidade, String tags) {
-		this.validador.validaAdicionaItemParaDoacao(id,idDoador,quantidade,tags,this.usuarios);
+		this.validador.validaAtualizaItemParaDoacao(id,idDoador,quantidade,tags,this.usuarios);
 		
 			if (quantidade != 0) {
 				if (this.usuarios.get(idDoador).getItens().get(id).getQuant() > quantidade) {
@@ -232,7 +232,7 @@ public class Controller {
 			
 	}
 	/**
-	 * Remove um item para doação
+	 * Remove um item para doacao
 	 * @param id id do item a ser removido
 	 * @param idDoador id do doador ao qual o item pertence
 	 */
