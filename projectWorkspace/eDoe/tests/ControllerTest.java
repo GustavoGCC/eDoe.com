@@ -74,7 +74,7 @@ class ControllerTest {
 	}
 	
 	@Test
-	void testAtualizaItemParaDoacao() {
+	void testAtualizaItem() {
 		Controller c = new Controller();
 		c.adicionaDoador("123", "Lucas", "lucas@ccc. edu", "1010-2222", "PESSOA_FISICA");
 		c.adicionaDescritor("leite");
@@ -85,7 +85,7 @@ class ControllerTest {
 	}
 	
 	@Test
-	void testRemoveItemParaDoacao() {
+	void testRemoveItem() {
 		Controller c = new Controller();
 		c.adicionaDoador("123", "Lucas", "lucas@ccc. edu", "1010-2222", "PESSOA_FISICA");
 		c.adicionaDescritor("pesos");
