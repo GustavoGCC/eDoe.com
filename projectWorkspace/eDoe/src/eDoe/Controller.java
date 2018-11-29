@@ -299,7 +299,7 @@ public class Controller {
 		
 	}
 	
-	public <T> String listaItensParaDoacao() {
+	public String listaItensParaDoacao() {
 		ArrayList<Item> lista = new ArrayList<>();
 		String s="";
 		
@@ -308,6 +308,8 @@ public class Controller {
 				lista.add(j);
 			}
 		}
+		
+		Collections.sort(lista);
 		
 		for (Item i : lista) {
 			s+=i.toString()+" | ";

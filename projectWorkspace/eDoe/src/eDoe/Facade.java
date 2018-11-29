@@ -1,5 +1,8 @@
 package eDoe;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 import easyaccept.EasyAccept;
 
 public class Facade {
@@ -50,6 +53,19 @@ public class Facade {
 	public void removeItemParaDoacao(int id, String idDoador) {
 		c.removeItemParaDoacao(id,idDoador);
 	}
+	
+	public String listaDescritorDeItensParaDoacao() {
+		return c.listaDescritorDeItensParaDoacao();
+	}
+	
+	public String listaItensParaDoacao() {
+		return c.listaItensParaDoacao();
+	}
+	
+	public String pesquisaItemParaDoacaoPorDescricao(String pesquisa) {
+		return c.pesquisaItemParaDoacaoPorDescricao(pesquisa);
+	}
+	
 	
 	public static void main(String[] args) {
 		args = new String[] {"eDoe.Facade","EasyAcceptTestes/use_case_1.txt","EasyAcceptTestes/use_case_2.txt","EasyAcceptTestes/use_case_3.txt"};
