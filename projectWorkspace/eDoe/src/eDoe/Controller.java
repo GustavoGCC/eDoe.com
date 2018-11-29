@@ -207,19 +207,21 @@ public class Controller {
 		this.validador.validaAtualizaItem(id,idDoador,quantidade,tags,this.usuarios);
 		
 			if (quantidade != 0) {
-				if (this.usuarios.get(idDoador).getItens().get(id).getQuant() > quantidade) {
+				if (!(this.usuarios.get(idDoador).getStatus().equals("receptor"))) {
+					if (this.usuarios.get(idDoador).getItens().get(id).getQuant() > quantidade) {
+						
+						int diferenca = this.usuarios.get(idDoador).getItens().get(id).getQuant() - quantidade;
+						
+						this.descritores.get(this.usuarios.get(idDoador).getItens().get(id).getDescricao()).diminuiQuant(diferenca);
+					}
 					
-					int diferenca = this.usuarios.get(idDoador).getItens().get(id).getQuant() - quantidade;
-					
-					this.descritores.get(this.usuarios.get(idDoador).getItens().get(id).getDescricao()).diminuiQuant(diferenca);
+					if (this.usuarios.get(idDoador).getItens().get(id).getQuant() < quantidade) {
+						
+						int diferenca = quantidade - this.usuarios.get(idDoador).getItens().get(id).getQuant();
+						
+						this.descritores.get(this.usuarios.get(idDoador).getItens().get(id).getDescricao()).aumentaQuant(diferenca);
+					}
 				}
-				
-				if (this.usuarios.get(idDoador).getItens().get(id).getQuant() < quantidade) {
-					
-					int diferenca = quantidade - this.usuarios.get(idDoador).getItens().get(id).getQuant();
-					
-					this.descritores.get(this.usuarios.get(idDoador).getItens().get(id).getDescricao()).aumentaQuant(diferenca);
-				}					
 					
 				this.usuarios.get(idDoador).getItens().get(id).setQuant(quantidade);
 				
@@ -243,9 +245,10 @@ public class Controller {
 		this.validador.validaRemoveItem(id,idDoador,this.usuarios);
 		
 		int diferenca = this.usuarios.get(idDoador).getItens().get(id).getQuant();
-			
-		this.descritores.get(this.usuarios.get(idDoador).getItens().get(id).getDescricao()).diminuiQuant(diferenca);
-			
+		
+		if (!(this.usuarios.get(idDoador).getStatus().equals("receptor"))) {
+			this.descritores.get(this.usuarios.get(idDoador).getItens().get(id).getDescricao()).diminuiQuant(diferenca);
+		}
 		this.usuarios.get(idDoador).getItens().remove(id); 
 
 	}

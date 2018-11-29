@@ -174,7 +174,7 @@ class ControllerTest {
 		c.adicionaItem("84473712044", "cama", 2, "madeira");
 		c.adicionaItem("84473712044", "carro", 1, "vermelho");
 		c.adicionaItem("80643201009", "sofa", 3, "couro");
-		assertEquals(c.listaItensNecessarios(),"0 - cama, tags: [madeira], quantidade: 2, receptor: Murilo Luiz Brito/84473712044 | 1 - carro, tags: [vermelho], quantidade: 1, receptor: Murilo Luiz Brito/84473712044 | 2 - sofa, tags: [couro], quantidade: 3, receptor: Tomas Otavio Lucas Teixeira/80643201009");
+		assertEquals(c.listaItensNecessarios(),"0 - cama, tags: [madeira], quantidade: 2, Receptor: Murilo Luiz Brito/84473712044 | 1 - carro, tags: [vermelho], quantidade: 1, Receptor: Murilo Luiz Brito/84473712044 | 2 - sofa, tags: [couro], quantidade: 3, Receptor: Tomas Otavio Lucas Teixeira/80643201009");
 	}
 	
 	@Test
