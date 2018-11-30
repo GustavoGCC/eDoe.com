@@ -144,19 +144,19 @@ public class Controller {
 	}
 	/**
 	 * Adiciona um item para doação a um usuário
-	 * @param idDoador id do usuário que irá doar o item
-	 * @param descricaoItem descrição do item a ser doado
-	 * @param quantidade quantidade do item a ser doado
-	 * @param tags tags do item a ser doado
-	 * @return o id do item a ser doado
+	 * @param idUsuario id do usuário que estara vinculado ao item
+	 * @param descricaoItem descrição do item a ser vinculado
+	 * @param quantidade quantidade do item a ser vinculado
+	 * @param tags tags do item a ser vinculado
+	 * @return o id do item a ser vinculado
 	 */
-	public int adicionaItem(String idDoador, String descricaoItem, int quantidade, String tags) {
-		this.validador.validaAdicionaItem(idDoador,descricaoItem,quantidade,tags,this.usuarios);
+	public int adicionaItem(String idUsuario, String descricaoItem, int quantidade, String tags) {
+		this.validador.validaAdicionaItem(idUsuario,descricaoItem,quantidade,tags,this.usuarios);
 		
-		for (Item item : this.usuarios.get(idDoador).getItens().values()) {
+		for (Item item : this.usuarios.get(idUsuario).getItens().values()) {
 			if (item.getDescricao().toLowerCase().equals(descricaoItem.toLowerCase()) && item.getTags().equals(tags)) {
 				
-				if (!(this.usuarios.get(idDoador).getStatus().equals("receptor"))) {
+				if (!(this.usuarios.get(idUsuario).getStatus().equals("receptor"))) {
 					int diferenca = quantidade - item.getQuant();
 					
 					this.descritores.get(descricaoItem).aumentaQuant(diferenca);
@@ -166,7 +166,7 @@ public class Controller {
 				return item.getId();
 			}
 		}
-		if (!(this.usuarios.get(idDoador).getStatus().equals("receptor"))) {
+		if (!(this.usuarios.get(idUsuario).getStatus().equals("receptor"))) {
 		
 			if (this.descritores.containsKey(descricaoItem.toLowerCase())) {
 			this.descritores.get(descricaoItem.toLowerCase()).aumentaQuant(quantidade);
@@ -177,7 +177,7 @@ public class Controller {
 			}
 		}
 			
-		this.usuarios.get(idDoador).getItens().put(this.idItens,new Item(descricaoItem.toLowerCase(), quantidade, tags,idItens));
+		this.usuarios.get(idUsuario).getItens().put(this.idItens,new Item(descricaoItem.toLowerCase(), quantidade, tags,idItens));
 			
 		this.idItens += 1;
 			
@@ -198,58 +198,58 @@ public class Controller {
 	/**
 	 * Atualiza a quantidade ou as tags de um item a ser doado.
 	 * @param id id do item a ser modificado
-	 * @param idDoador id do doador ao qual pertence o item
+	 * @param idUsuario id do usuario ao qual o item esta atribuido
 	 * @param quantidade nova quantidade do item
 	 * @param tags novas tags do item
 	 * @return a nova representação em String do item
 	 */
-	public String atualizaItem(int id, String idDoador, int quantidade, String tags) {
-		this.validador.validaAtualizaItem(id,idDoador,quantidade,tags,this.usuarios);
+	public String atualizaItem(int id, String idUsuario, int quantidade, String tags) {
+		this.validador.validaAtualizaItem(id,idUsuario,quantidade,tags,this.usuarios);
 		
 			if (quantidade > 0) {
-				if (!(this.usuarios.get(idDoador).getStatus().equals("receptor"))) {
-					if (this.usuarios.get(idDoador).getItens().get(id).getQuant() > quantidade) {
+				if (!(this.usuarios.get(idUsuario).getStatus().equals("receptor"))) {
+					if (this.usuarios.get(idUsuario).getItens().get(id).getQuant() > quantidade) {
 						
-						int diferenca = this.usuarios.get(idDoador).getItens().get(id).getQuant() - quantidade;
+						int diferenca = this.usuarios.get(idUsuario).getItens().get(id).getQuant() - quantidade;
 						
-						this.descritores.get(this.usuarios.get(idDoador).getItens().get(id).getDescricao()).diminuiQuant(diferenca);
+						this.descritores.get(this.usuarios.get(idUsuario).getItens().get(id).getDescricao()).diminuiQuant(diferenca);
 					}
 					
-					if (this.usuarios.get(idDoador).getItens().get(id).getQuant() < quantidade) {
+					if (this.usuarios.get(idUsuario).getItens().get(id).getQuant() < quantidade) {
 						
-						int diferenca = quantidade - this.usuarios.get(idDoador).getItens().get(id).getQuant();
+						int diferenca = quantidade - this.usuarios.get(idUsuario).getItens().get(id).getQuant();
 						
-						this.descritores.get(this.usuarios.get(idDoador).getItens().get(id).getDescricao()).aumentaQuant(diferenca);
+						this.descritores.get(this.usuarios.get(idUsuario).getItens().get(id).getDescricao()).aumentaQuant(diferenca);
 					}
 				}
 					
-				this.usuarios.get(idDoador).getItens().get(id).setQuant(quantidade);
+				this.usuarios.get(idUsuario).getItens().get(id).setQuant(quantidade);
 				
 			}
 			
 		if (tags != null && !tags.trim().equals("")) {
 			
-			this.usuarios.get(idDoador).getItens().get(id).setTags(tags);
+			this.usuarios.get(idUsuario).getItens().get(id).setTags(tags);
 			
 		}
 		
-		return this.usuarios.get(idDoador).getItens().get(id).toString();
+		return this.usuarios.get(idUsuario).getItens().get(id).toString();
 			
 	}
 	/**
 	 * Remove um item para doação
 	 * @param id id do item a ser removido
-	 * @param idDoador id do doador ao qual o item pertence
+	 * @param idUsuario id do usuario ao qual o item esta atribuido
 	 */
-	public void removeItem(int id, String idDoador) {
-		this.validador.validaRemoveItem(id,idDoador,this.usuarios);
+	public void removeItem(int id, String idUsuario) {
+		this.validador.validaRemoveItem(id,idUsuario,this.usuarios);
 		
-		int diferenca = this.usuarios.get(idDoador).getItens().get(id).getQuant();
+		int diferenca = this.usuarios.get(idUsuario).getItens().get(id).getQuant();
 		
-		if (!(this.usuarios.get(idDoador).getStatus().equals("receptor"))) {
-			this.descritores.get(this.usuarios.get(idDoador).getItens().get(id).getDescricao()).diminuiQuant(diferenca);
+		if (!(this.usuarios.get(idUsuario).getStatus().equals("receptor"))) {
+			this.descritores.get(this.usuarios.get(idUsuario).getItens().get(id).getDescricao()).diminuiQuant(diferenca);
 		}
-		this.usuarios.get(idDoador).getItens().remove(id); 
+		this.usuarios.get(idUsuario).getItens().remove(id); 
 
 	}
 	/**
