@@ -21,7 +21,7 @@ public class Validacao {
 	 * @param email
 	 * @param celular
 	 * @param classe
-	 * @param usuarios
+	 * @param usuarios 
 	 */
 	public void validaAdicionaDoador(String id, String nome, String email, String celular, String classe, Map<String,Usuario> usuarios) {
 		verificaNuloOuVazio(nome, "Entrada invalida: nome nao pode ser vazio ou nulo."); 
