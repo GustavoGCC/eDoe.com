@@ -44,27 +44,45 @@ public class Validacao {
 		
 		
 	}
-	
+	/**
+	 * Metodo que checa possiveis erros no metodo pesquisaUsuarioPorId e envia ou nao uma msensagem de erro
+	 * @param id id do usuario
+	 * @param usuarios Map que possui todos os usuarios relacionados com seus identificadores unicos
+	 */
 	public void validapesquisaUsuarioPorId(String id,Map<String,Usuario> usuarios) {
 		if (id == null || id.trim().equals("")) {throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");}
 		
 		if (!usuarios.containsKey(id)) {throw new IllegalArgumentException("Usuario nao encontrado: " + id + ".");}
 		
 	}
-	
+	/**
+	 * Metodo que checa possiveis erros em PesquisaUsuarioPorNome e envia ou nao uma mensagem de erro
+	 * @param nome nome a ser pesquisado no metodo original
+	 */
 	public void validapesquisaUsuarioPorNome(String nome) {
 		
 		if (nome == null || nome.trim().equals("")) {throw new IllegalArgumentException("Entrada invalida: nome nao pode ser vazio ou nulo.");}
 		
 	}
-	
+	/**
+	 * Metodo que verifica se algum valor e nulo ou vazio e envia uma mensagem de erro
+	 * @param valor valor a ser verificado
+	 * @param msg mensagem de erro
+	 */
 	public void verificaNuloOuVazio(String valor, String msg) {
 		if (valor == null || valor.trim().equals("")) {
 			throw new IllegalArgumentException(msg);
 		}
 		
 	}
-
+	/**
+	 * Metodo que verifica se ha algum erro na execucao de atualizaUsuario
+	 * @param id id a ser verificado
+	 * @param nome nome a ser verificado
+	 * @param email email a ser verificado
+	 * @param celular celular a ser verificado
+	 * @param usuarios Map que possui todos os usuarios relacionados com seus identificadores unicos
+	 */
 	public void validaAtualizaUsuario(String id, String nome, String email, String celular,
 			Map<String, Usuario> usuarios) {
 		if (id == null || id.trim().equals("")) {throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");}
@@ -72,21 +90,36 @@ public class Validacao {
 		if (!usuarios.containsKey(id)) {throw new IllegalArgumentException("Usuario nao encontrado: " + id + ".");}
 		
 	}
-
+	/**
+	 * Metodo que verifica possiveis erros na execucao do metodo removeUsuario
+	 * @param id id a ser verificado
+	 * @param usuarios Map que possui todos os usuarios relacionados com seus identificadores unicos
+	 */
 	public void validaRemoveUsario(String id, Map<String, Usuario> usuarios) {
 		if (id == null || id.trim().equals("")) {throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");}
 		
 		if (!usuarios.containsKey(id)) {throw new IllegalArgumentException("Usuario nao encontrado: " + id + ".");}
 		
 	}
-
+	/**
+	 * Metodo que verifica possiveis erros na execucao de adicionaDescritor
+	 * @param descricao descricao a ser verificada
+	 * @param descritores Map que possui todos os descritores relacionados a seus identificadores unicos
+	 */
 	public void validaAdicionaDescritor(String descricao, Map<String, Descritor> descritores) {
 		if (descricao == null || descricao.trim().equals("")) {throw new IllegalArgumentException("Entrada invalida: descricao nao pode ser vazia ou nula.");}
 		
 		if (descritores.containsKey(descricao.toLowerCase())) {throw new IllegalArgumentException("Descritor de Item ja existente: " + descricao.toLowerCase() + ".");}
 		
 	}
-
+	/**
+	 * Metodo que verifica se ha possiveis erros na execucao do metodo adicionaItem
+	 * @param idUsuario idUsuario a ser verificado
+	 * @param descricaoItem descricao do item a ser verificada
+	 * @param quantidade quantidade que sera verificada
+	 * @param tags tags do item que serao verificadas
+	 * @param usuarios Map que possui todos os usuarios relacionados com seus identificadores unicos
+	 */
 	public void validaAdicionaItem(String idUsuario, String descricaoItem, int quantidade, String tags, Map<String, Usuario> usuarios) {
 		if (descricaoItem == null || descricaoItem.trim().equals("")) {throw new IllegalArgumentException("Entrada invalida: descricao nao pode ser vazia ou nula.");}
 		
@@ -98,7 +131,14 @@ public class Validacao {
 		
 	}
 
-
+	/**
+	 * Metodo que verifica a existencia de possiveis erros na execucao do metodo atualizaItem
+	 * @param id id a ser verificado
+	 * @param idUsuario id do usuario a ser verificado
+	 * @param quantidade quantidade a ser verificada
+	 * @param tags tags do item que serao verificadas
+	 * @param usuarios Map que possui todos os usuarios relacionados com seus identificadores unicos
+	 */
 	public void validaAtualizaItem(int id, String idUsuario, int quantidade, String tags,Map<String, Usuario> usuarios) {
 
 		if (id < 0) {throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");}
@@ -110,7 +150,12 @@ public class Validacao {
 		if (!usuarios.get(idUsuario).getItens().containsKey(id)) {throw new IllegalArgumentException("Item nao encontrado: " + id + ".");}
 		
 	}
-
+	/**
+	 * Metodo que verifica a existencia de possiveis erros na execucao do metodo removeItem
+	 * @param id id a ser verificado
+	 * @param idUsuario id do usuario que vai ser verificado
+	 * @param usuarios Map que possui todos os usuarios relacionados com seus identificadores unicos
+	 */
 	public void validaRemoveItem(int id, String idUsuario, Map<String, Usuario> usuarios) {
 		if (id < 0) {throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");}
 		
@@ -125,7 +170,12 @@ public class Validacao {
 		if (!usuarios.get(idUsuario).getItens().containsKey(id)) {throw new IllegalArgumentException("Item nao encontrado: " + id + ".");}
 		
 	}
-
+	/**
+	 * Metodo que verifica a existencia de possiveis erros na execucao de exibeItem
+	 * @param id id a ser verificado
+	 * @param idDoador id do usuario que sera verificado
+	 * @param usuarios Map que possui todos os usuarios relacionados com seus identificadores unicos
+	 */
 	public void validaExibeItem(int id, String idDoador, Map<String, Usuario> usuarios) {
 		if (idDoador == null || idDoador.trim().equals("")) {throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");}
 		
@@ -134,7 +184,10 @@ public class Validacao {
 		if (!usuarios.get(idDoador).getItens().containsKey(id)) {throw new IllegalArgumentException("Item nao encontrado: " + id + ".");}
 		
 	}
-
+	/**
+	 * Metodo que verifica a existencia de possiveis erros na execucao de pesquisaItemParaDoacaoPorDescricao
+	 * @param pesquisa substring que ira ser verificada
+	 */
 	public void validaPesquisaItemParaDoacaoPorDescricao(String pesquisa) {
 		if (pesquisa==null) {
 			throw new NullPointerException("Entrada invalida: texto da pesquisa nao pode ser vazio ou nulo.");
