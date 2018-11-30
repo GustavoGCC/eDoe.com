@@ -344,18 +344,22 @@ public class Controller {
 	public String pesquisaItemParaDoacaoPorDescricao(String pesquisa) {
 		this.validador.validaPesquisaItemParaDoacaoPorDescricao(pesquisa);
 		
-		Map<String, Item> itensValidos=new TreeMap<>();
+		ArrayList<Item> itensValidos=new ArrayList<>();
+		
+		ComparadorPorDescricao comparador=new ComparadorPorDescricao();
 		
 		String s="";
 		
 		for (Usuario i : usuarios.values()) {
 			for (Item j : i.getItens().values())
 				if (j.getDescricao().toLowerCase().contains(pesquisa.toLowerCase())) {
-					itensValidos.put(j.getDescricao()+"|"+j.getId(), j);
+					itensValidos.add(j);
 			}
 		}
 		
-		for (Item i : itensValidos.values()) {
+		Collections.sort(itensValidos, comparador);
+		
+		for (Item i : itensValidos) {
 			s+=i.toString()+" | ";
 		}
 		
