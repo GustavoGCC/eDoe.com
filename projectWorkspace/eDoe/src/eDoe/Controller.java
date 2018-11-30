@@ -206,7 +206,7 @@ public class Controller {
 	public String atualizaItem(int id, String idDoador, int quantidade, String tags) {
 		this.validador.validaAtualizaItem(id,idDoador,quantidade,tags,this.usuarios);
 		
-			if (quantidade != 0) {
+			if (quantidade > 0) {
 				if (!(this.usuarios.get(idDoador).getStatus().equals("receptor"))) {
 					if (this.usuarios.get(idDoador).getItens().get(id).getQuant() > quantidade) {
 						
