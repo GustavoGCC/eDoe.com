@@ -5,9 +5,9 @@ import java.util.Collections;
 
 import org.junit.jupiter.api.Test;
 
-import eDoe.ComparadorPorDescricao;
 import eDoe.Controller;
 import eDoe.Item;
+import util.ComparadorPorDescricao;
 
 class ComparadorPorDescricaoTest {
 

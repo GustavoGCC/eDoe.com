@@ -1,6 +1,8 @@
-package eDoe;
+package util;
 
 import java.util.Comparator;
+
+import eDoe.Item;
 /**
  * Comparador especifico que foi criado para ordenar dois itens em ordem alfabetica com base em descricao
  * @author Daniel de Matos Figueredo

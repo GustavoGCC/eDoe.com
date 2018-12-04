@@ -5,6 +5,7 @@ import java.util.*;
 import org.junit.jupiter.api.Test;
 
 import eDoe.*;
+import util.Validacao;
 
 class ValidacaoTest {
 

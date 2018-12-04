@@ -82,6 +82,10 @@ public class Facade {
 		c.removeItem(id,idReceptor);
 	}
 	
+	public String match(String idReceptor, int idItemNecessario) {
+		return "";
+	}
+	
 	public static void main(String[] args) {
 		args = new String[] {"eDoe.Facade","EasyAcceptTestes/use_case_1.txt","EasyAcceptTestes/use_case_2.txt","EasyAcceptTestes/use_case_3.txt","EasyAcceptTestes/use_case_4.txt"};
 		EasyAccept.main(args);

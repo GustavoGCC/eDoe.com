@@ -5,8 +5,8 @@ import java.util.Collections;
 
 import org.junit.jupiter.api.Test;
 
-import eDoe.ComparadorDeArrayDeInformacoesDeItem;
 import eDoe.Item;
+import util.ComparadorDeArrayDeInformacoesDeItem;
 
 class ComparadorDeArrayDeInformacoesDeItemTest {
 

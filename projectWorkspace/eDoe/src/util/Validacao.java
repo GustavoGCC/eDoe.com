@@ -1,6 +1,9 @@
-package eDoe;
+package util;
 
 import java.util.Map;
+
+import eDoe.Descritor;
+import eDoe.Usuario;
 /**
  * Classe criada para guardar as validacoes do controlador com o objetivo de aumentar a coesao
  * @author Gustavo Gurjão Camargo Campos ,Joao Victor Teodulo Wanderley 

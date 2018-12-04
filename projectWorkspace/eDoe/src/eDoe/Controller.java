@@ -9,6 +9,11 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import util.ComparadorDeArrayDeInformacoesDeItem;
+import util.ComparadorPorDescricao;
+import util.Validacao;
+
 import java.util.Scanner;
 import java.util.TreeMap;
 /**
@@ -407,5 +412,49 @@ public class Controller {
 		
 		return s;
 	}
-
+	
+	public void match(String idReceptor, int idItemNecessario) {
+		Item itemNecessario = this.usuarios.get(idReceptor).getItens().get(idItemNecessario);
+		
+		ArrayList<ArrayList> canditatosADoacao = new ArrayList<>();
+		
+		for (Usuario u : this.usuarios.values()) {
+			if (u.getStatus().equals("receptor")) {
+				continue;
+			}
+			for (Item i : u.getItens().values()) {
+				if (!(i.getDescricao().equals(itemNecessario.getDescricao()))) {
+					continue;
+				}
+				ArrayList pontosECandidatoADoacao = new ArrayList();
+				pontosECandidatoADoacao.add(calcularPontosDeMatch(itemNecessario,i));
+				pontosECandidatoADoacao.add(i);
+				canditatosADoacao.add(pontosECandidatoADoacao);
+			}
+		}
+	}
+	
+	private int calcularPontosDeMatch(Item itemNecessario,Item candidatoADoacao) {
+		int pontos = 0;
+		if (itemNecessario.getDescricao().equals(candidatoADoacao.getDescricao())) {
+			pontos += 20;
+		}
+		
+		String[] TagsDeItemNecessario = itemNecessario.getTags().split(", ");
+		String[] TagsDeCandidatoADoacao = candidatoADoacao.getTags().split(", ");
+		
+		for (int i = 0; i < TagsDeItemNecessario.length; i++) {
+			for (int o = 0; o < TagsDeCandidatoADoacao.length; o++) {
+				if (TagsDeItemNecessario[i].equals(TagsDeCandidatoADoacao[o])) {
+					if (i == o) {
+						pontos += 10;
+						break;
+					}
+					pontos += 5;
+					break;
+				}
+			}
+		}
+		return pontos;
+	}
 }
