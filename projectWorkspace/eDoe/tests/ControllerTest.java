@@ -100,25 +100,33 @@ class ControllerTest {
 	@Test
 	void testListaDescritoresDeItensParaDoacao() {
 		Controller c = new Controller();
+		
 		c.adicionaDescritor("travesseiro");
+		
 		c.adicionaDoador("123", "Gustavo", "gustavo.campos@ccc.ufcg.edu.br", "9999-9999", "PESSOA_FISICA");
+		
 		c.adicionaItem("123", "travesseiro", 3, "macio");
 		c.adicionaItem("123", "cama", 1, "madeira");
 		c.adicionaItem("123", "travesseiro", 2, "macio");
 		c.adicionaItem("123", "cama", 1, "com colchao");
+		
 		c.adicionaDescritor("xicara");
+		
 		assertEquals(c.listaDescritorDeItensParaDoacao(),"2 - cama | 2 - travesseiro | 0 - xicara");
 	}
 	
 	@Test
 	void testListaItensParaDoacao() {
 		Controller c = new Controller();
+		
 		c.adicionaDoador("111", "Gustavo", "gustavo.campos", "9999-9999", "PESSOA_FISICA");
 		c.adicionaDoador("222", "Gabriel", "gabriel.campos", "8888-8888", "PESSOA_FISICA");
+		
 		c.adicionaItem("111", "travesseiro", 3, "macio");
 		c.adicionaItem("222", "cama", 1, "madeira");
 		c.adicionaItem("111", "urso de pelucia", 4, "fofo");
 		c.adicionaItem("222", "colchao", 3, "de penas");
+		
 		assertEquals(c.listaItensParaDoacao(),"2 - urso de pelucia, tags: [fofo], quantidade: 4, doador: Gustavo/111 | 3 - colchao, tags: [de penas], quantidade: 3, doador: Gabriel/222 | 0 - travesseiro, tags: [macio], quantidade: 3, doador: Gustavo/111 | 1 - cama, tags: [madeira], quantidade: 1, doador: Gabriel/222");
 
 }
@@ -126,8 +134,10 @@ class ControllerTest {
 	@Test
 	void testPesquisaItemParaDoacaoPorDescricao() {
 		Controller c = new Controller();
+		
 		c.adicionaDoador("111", "Gustavo", "gustavo.campos", "9999-9999", "PESSOA_FISICA");
 		c.adicionaDoador("222", "Gabriel", "gabriel.campos", "8888-8888", "PESSOA_FISICA");
+		
 		c.adicionaItem("111", "cama elastica", 2, "pulavel");
 		c.adicionaItem("222", "cama de casal", 1, "plus size");
 		c.adicionaItem("111", "Cama de solteiro", 1, "infantil");
@@ -145,8 +155,10 @@ class ControllerTest {
 	@Test
 	void testAdicionaItemNecessario() {
 		Controller c = new Controller();
+		
 		c.lerReceptores("arquivos_sistema/novosReceptores.csv");
 		c.lerReceptores("arquivos_sistema/atualizaReceptores.csv");
+		
 		c.adicionaItem("84473712044", "cama", 2, "madeira");
 		
 		try {c.adicionaItem("","cama",3,"barata");
@@ -169,25 +181,34 @@ class ControllerTest {
 	@Test
 	void testListaItensNecessarios() {
 		Controller c = new Controller();
+		
 		c.lerReceptores("arquivos_sistema/novosReceptores.csv");
 		c.lerReceptores("arquivos_sistema/atualizaReceptores.csv");
+		
 		c.adicionaItem("84473712044", "cama", 2, "madeira");
 		c.adicionaItem("84473712044", "carro", 1, "vermelho");
 		c.adicionaItem("80643201009", "sofa", 3, "couro");
+		
 		assertEquals(c.listaItensNecessarios(),"0 - cama, tags: [madeira], quantidade: 2, Receptor: Murilo Luiz Brito/84473712044 | 1 - carro, tags: [vermelho], quantidade: 1, Receptor: Murilo Luiz Brito/84473712044 | 2 - sofa, tags: [couro], quantidade: 3, Receptor: Tomas Otavio Lucas Teixeira/80643201009");
 	}
 	
 	@Test
 	void testAtualizaItemNecessario() {
 		Controller c = new Controller();
+		
 		c.lerReceptores("arquivos_sistema/novosReceptores.csv");
 		c.lerReceptores("arquivos_sistema/atualizaReceptores.csv");
+		
 		c.adicionaItem("84473712044", "cama", 2, "madeira");
 		c.adicionaItem("84473712044", "carro", 1, "vermelho");
 		c.adicionaItem("80643201009", "sofa", 3, "couro");
+	
 		c.atualizaItem(0, "84473712044", 1, null);
+		
 		assertEquals(c.exibeItem(0, "84473712044"),"0 - cama, tags: [madeira], quantidade: 1");
+		
 		c.atualizaItem(1, "84473712044", 0, "azul");
+		
 		assertEquals(c.exibeItem(1, "84473712044"),"1 - carro, tags: [azul], quantidade: 1");
 		
 		try {c.atualizaItem(0, "123", 1, "azul");
@@ -207,11 +228,14 @@ class ControllerTest {
 	@Test
 	void testRemocaoDeItemNecessario() {
 		Controller c = new Controller();
+		
 		c.lerReceptores("arquivos_sistema/novosReceptores.csv");
 		c.lerReceptores("arquivos_sistema/atualizaReceptores.csv");
+		
 		c.adicionaItem("84473712044", "cama", 2, "madeira");
 		c.adicionaItem("84473712044", "carro", 1, "vermelho");
 		c.adicionaItem("80643201009", "sofa", 3, "couro");
+		
 		c.removeItem(0, "84473712044");
 		
 		try {c.removeItem(0, "");
@@ -230,4 +254,125 @@ class ControllerTest {
 		} catch(IllegalArgumentException exception) {};
 	
 	}
+	
+	@Test
+	void testMatch() {
+		Controller c = new Controller();
+		
+		c.lerReceptores("arquivos_sistema/novosReceptores.csv");
+		c.lerReceptores("arquivos_sistema/atualizaReceptores.csv");
+		
+		c.adicionaItem("84473712044", "cama", 2, "plus size, madeira,chique,resistente");
+		c.adicionaItem("84473712044", "carro", 1, "vermelho");
+		c.adicionaItem("80643201009", "sofa", 3, "couro");
+		
+		c.adicionaDoador("111", "Gustavo", "gustavo.campos", "9999-9999", "PESSOA_FISICA");
+		c.adicionaDoador("222", "Gabriel", "gabriel.campos", "8888-8888", "PESSOA_FISICA");
+		
+		c.adicionaItem("111", "cama", 2, "pulavel");
+		c.adicionaItem("222", "cama", 1, "madeira");
+		c.adicionaItem("222", "cama", 1, "chique");
+		c.adicionaItem("111", "Cama", 1, "madeira,plus size");
+		c.adicionaItem("111", "cama", 2, "plus size, madeira");
+		
+		assertEquals(c.match("84473712044",0), "7 - cama, tags: [plus size, madeira], quantidade: 2, doador: Gustavo/111 | 6 - Cama, tags: [madeira,plus size], quantidade: 1, doador: Gustavo/111 | 5 - cama, tags: [chique], quantidade: 5, doador: Gabriel/222 | 4 - cama, tags: [madeira], quantidade: 1, doador: Gabriel/222 | 3 - cama, tags: [pulavel], quantidade: 2, doador: Gustavo/111");
+		assertEquals(c.match("84473712044",1),"");
+		
+		try {c.match(null, 0);
+		} catch(IllegalArgumentException exception) {};
+		
+		try {c.match("", 1);
+		} catch(IllegalArgumentException exception) {};
+		
+		try {c.match("80643201009", -3);
+		} catch(IllegalArgumentException exception) {};
+		
+		try {c.match("111", 2);
+		} catch(IllegalArgumentException exception) {};
+		
+		try {c.match("80643201009", 109);
+		} catch(IllegalArgumentException exception) {};
+		
+		try {c.match("222222", 23);
+		} catch(IllegalArgumentException exception) {};
+	}
+	
+	@Test
+	void testRealizaDoacao() {
+		Controller c = new Controller();
+		
+		c.lerReceptores("arquivos_sistema/novosReceptores.csv");
+		c.lerReceptores("arquivos_sistema/atualizaReceptores.csv");
+		
+		c.adicionaItem("84473712044", "cama", 2, "plus size, madeira,chique,resistente");
+		c.adicionaItem("84473712044", "carro", 1, "vermelho");
+		c.adicionaItem("80643201009", "sofa", 3, "couro");
+		c.adicionaItem("80643201009", "cama", 1, "solteiro");
+		
+		c.adicionaDoador("111", "Gustavo", "gustavo.campos", "9999-9999", "PESSOA_FISICA");
+		c.adicionaDoador("222", "Gabriel", "gabriel.campos", "8888-8888", "PESSOA_FISICA");
+		
+		c.adicionaItem("111", "cama", 2, "pulavel");
+		c.adicionaItem("222", "cama", 1, "madeira");
+		c.adicionaItem("222", "cama", 1, "chique");
+		c.adicionaItem("111", "Cama", 2, "madeira,plus size");
+		c.adicionaItem("111", "cama", 2, "plus size, madeira");
+		
+		assertEquals(c.realizaDoacao(0,8,"01/01/2000"),"01/01/2000 - doador: Gustavo/111, item: cama, quantidade: 2, receptor: Murilo Luiz Brito/84473712044");
+		assertEquals(c.realizaDoacao(3,7,"01/01/2001"),"01/01/2001 - doador: Gustavo/111, item: Cama, quantidade: 1, receptor: Tomas Otavio Lucas Teixeira/80643201009");
+		
+		try {c.realizaDoacao(-1,7,"01/01/2000");
+		} catch(IllegalArgumentException exception) {};
+		
+		try {c.realizaDoacao(0,-2,"01/01/2000");
+		} catch(IllegalArgumentException exception) {};
+		
+		try {c.realizaDoacao(19999,2,"01/01/2000");
+		} catch(IllegalArgumentException exception) {};
+		
+		try {c.realizaDoacao(0,2000,"01/01/2000");
+		} catch(IllegalArgumentException exception) {};
+		
+		try {c.realizaDoacao(2,4,"01/01/2000");
+		} catch(IllegalArgumentException exception) {};
+		
+		try {c.realizaDoacao(0,7,"");
+		} catch(IllegalArgumentException exception) {};
+		
+		try {c.realizaDoacao(0,7,null);
+		} catch(IllegalArgumentException exception) {};		
+		
+	}
+	
+	@Test
+	void testListaDoacoes() {
+		Controller c = new Controller();
+		
+		c.lerReceptores("arquivos_sistema/novosReceptores.csv");
+		c.lerReceptores("arquivos_sistema/atualizaReceptores.csv");
+		
+		c.adicionaItem("84473712044", "cama", 2, "plus size, madeira,chique,resistente");
+		c.adicionaItem("84473712044", "carro", 1, "vermelho");
+		c.adicionaItem("80643201009", "sofa", 3, "couro");
+		c.adicionaItem("80643201009", "cama", 1, "solteiro");
+		
+		c.adicionaDoador("111", "Gustavo", "gustavo.campos", "9999-9999", "PESSOA_FISICA");
+		c.adicionaDoador("222", "Gabriel", "gabriel.campos", "8888-8888", "PESSOA_FISICA");
+		
+		c.adicionaItem("111", "cama", 2, "pulavel");
+		c.adicionaItem("222", "cama", 1, "madeira");
+		c.adicionaItem("222", "cama", 1, "chique");
+		c.adicionaItem("111", "Cama", 2, "madeira,plus size");
+		c.adicionaItem("111", "cama", 2, "plus size, madeira");
+		c.adicionaItem("222", "carro", 1, "vermelho");
+		
+		assertEquals(c.listaDoacoes(),"");
+		
+		c.realizaDoacao(0,8,"01/01/2000");
+		c.realizaDoacao(3,7,"01/01/2001");
+		c.realizaDoacao(1,9,"01/01/2001");
+		
+		assertEquals(c.listaDoacoes(), "01/01/2000 - doador: Gustavo/111, item: cama, quantidade: 2, receptor: Murilo Luiz Brito/84473712044 | 01/01/2001 - doador: Gustavo/111, item: cama, quantidade: 1, receptor: Tomas Otavio Lucas Teixeira/80643201009 | 01/01/2001 - doador: Gabriel/222, item: carro, quantidade: 1, receptor: Murilo Luiz Brito/84473712044");
+	}
+
 }
