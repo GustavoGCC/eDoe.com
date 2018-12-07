@@ -12,6 +12,7 @@ import java.util.Map.Entry;
 
 import util.ComparadorDeArrayDeInformacoesDeItem;
 import util.ComparadorPorDescricao;
+import util.TuplaDePontosDeMatchComItemEUsuario;
 import util.Validacao;
 
 import java.util.Scanner;
@@ -413,10 +414,10 @@ public class Controller {
 		return s;
 	}
 	
-	public void match(String idReceptor, int idItemNecessario) {
+	public String match(String idReceptor, int idItemNecessario) {
 		Item itemNecessario = this.usuarios.get(idReceptor).getItens().get(idItemNecessario);
 		
-		ArrayList<ArrayList> canditatosADoacao = new ArrayList<>();
+		ArrayList<TuplaDePontosDeMatchComItemEUsuario> canditatosADoacao = new ArrayList<>();
 		
 		for (Usuario u : this.usuarios.values()) {
 			if (u.getStatus().equals("receptor")) {
@@ -426,12 +427,25 @@ public class Controller {
 				if (!(i.getDescricao().equals(itemNecessario.getDescricao()))) {
 					continue;
 				}
-				ArrayList pontosECandidatoADoacao = new ArrayList();
-				pontosECandidatoADoacao.add(calcularPontosDeMatch(itemNecessario,i));
-				pontosECandidatoADoacao.add(i);
+				TuplaDePontosDeMatchComItemEUsuario pontosECandidatoADoacao = new TuplaDePontosDeMatchComItemEUsuario(calcularPontosDeMatch(itemNecessario,i),i,u);
 				canditatosADoacao.add(pontosECandidatoADoacao);
 			}
 		}
+		
+		Collections.sort(canditatosADoacao);
+		
+		String retorno = "";
+		for (TuplaDePontosDeMatchComItemEUsuario tupla : canditatosADoacao) {
+			retorno += tupla.getItem().getId() + " - " + tupla.getItem().getDescricaoETagsEQuantidades() + ", Doador: " + tupla.getUsuario().getNome() + "/" + tupla.getUsuario().getId() + " | ";
+		}
+		
+		if (!(retorno.equals(""))){
+			retorno = retorno.substring(0, retorno.length() - 3);
+		}
+		
+		return retorno;
+		
+		
 	}
 	
 	private int calcularPontosDeMatch(Item itemNecessario,Item candidatoADoacao) {
@@ -456,5 +470,13 @@ public class Controller {
 			}
 		}
 		return pontos;
+	}
+	public Object realizaDoacao(int i, int j, String string) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public Object listaDoacoes() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
