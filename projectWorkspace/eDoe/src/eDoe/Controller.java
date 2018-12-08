@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -415,6 +416,8 @@ public class Controller {
 	}
 	
 	public String match(String idReceptor, int idItemNecessario) {
+		this.validador.validaMatch(idReceptor,idItemNecessario,this.usuarios);
+		
 		Item itemNecessario = this.usuarios.get(idReceptor).getItens().get(idItemNecessario);
 		
 		ArrayList<TuplaDePontosDeMatchComItemEUsuario> canditatosADoacao = new ArrayList<>();
@@ -436,7 +439,7 @@ public class Controller {
 		
 		String retorno = "";
 		for (TuplaDePontosDeMatchComItemEUsuario tupla : canditatosADoacao) {
-			retorno += tupla.getItem().getId() + " - " + tupla.getItem().getDescricaoETagsEQuantidades() + ", Doador: " + tupla.getUsuario().getNome() + "/" + tupla.getUsuario().getId() + " | ";
+			retorno += tupla.getItem().getId() + " - " + tupla.getItem().getDescricaoETagsEQuantidades() + ", doador: " + tupla.getUsuario().getNome() + "/" + tupla.getUsuario().getId() + " | ";
 		}
 		
 		if (!(retorno.equals(""))){
@@ -450,25 +453,37 @@ public class Controller {
 	
 	private int calcularPontosDeMatch(Item itemNecessario,Item candidatoADoacao) {
 		int pontos = 0;
-		if (itemNecessario.getDescricao().equals(candidatoADoacao.getDescricao())) {
+		
+		if (itemNecessario.getDescricao().equalsIgnoreCase(candidatoADoacao.getDescricao())) {
 			pontos += 20;
 		}
 		
-		String[] TagsDeItemNecessario = itemNecessario.getTags().split(", ");
-		String[] TagsDeCandidatoADoacao = candidatoADoacao.getTags().split(", ");
+		String[] TagsDeItemNecessario = itemNecessario.getTags().split(",");
+		String[] TagsDeCandidatoADoacao = candidatoADoacao.getTags().split(",");
 		
 		for (int i = 0; i < TagsDeItemNecessario.length; i++) {
-			for (int o = 0; o < TagsDeCandidatoADoacao.length; o++) {
-				if (TagsDeItemNecessario[i].equals(TagsDeCandidatoADoacao[o])) {
-					if (i == o) {
-						pontos += 10;
-						break;
-					}
+			if (Arrays.asList(TagsDeCandidatoADoacao).contains(TagsDeItemNecessario[i])) {
+				pontos += 5;
+			}
+		}
+		
+		if (TagsDeItemNecessario.length <= TagsDeCandidatoADoacao.length) {
+			for (int i = 0; i < TagsDeItemNecessario.length; i++) {
+				if (TagsDeItemNecessario[i].equalsIgnoreCase(TagsDeCandidatoADoacao[i])) {
 					pontos += 5;
-					break;
 				}
 			}
 		}
+			
+		else {
+			for (int i = 0; i < TagsDeCandidatoADoacao.length; i++) {
+				if (TagsDeItemNecessario[i].equalsIgnoreCase(TagsDeCandidatoADoacao[i])) {
+					pontos += 5;
+				}
+		}
+	}
+			
+		
 		return pontos;
 	}
 	public Object realizaDoacao(int i, int j, String string) {

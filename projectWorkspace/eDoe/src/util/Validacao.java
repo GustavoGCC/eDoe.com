@@ -201,6 +201,18 @@ public class Validacao {
 		}
 		
 	}
+	public void validaMatch(String idReceptor, int idItemNecessario, Map<String, Usuario> usuarios) {
+		if (idReceptor == null || idReceptor.trim().equals("")) {throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");}
+		
+		if (!usuarios.containsKey(idReceptor)) {throw new IllegalArgumentException("Usuario nao encontrado: " + idReceptor + ".");}
+		
+		
+		if (usuarios.get(idReceptor).getStatus().equals("doador")) {throw new IllegalArgumentException("O Usuario deve ser um receptor: " + idReceptor + ".");}
+		
+		if (idItemNecessario < 0) {throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");}
+		
+		if (!usuarios.get(idReceptor).getItens().containsKey(idItemNecessario)) {throw new IllegalArgumentException("Item nao encontrado: " + idItemNecessario + ".");}
+	}
 	
 	
 
