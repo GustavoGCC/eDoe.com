@@ -490,7 +490,16 @@ public class Controller {
 		
 		return pontos;
 	}
-	public void realizaDoacao(int idDoado, int idNecessario, String data) {
+	public String realizaDoacao(int idNecessario, int idDoado, String data) {
+		if (idDoado < 0) throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
+		
+		if (idNecessario < 0) throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
+		
+		if (data==null) throw new NullPointerException("Entrada invalida: data nao pode ser vazia ou nula.");
+		
+		if (data.trim().equals("")) throw new IllegalArgumentException("Entrada invalida: data nao pode ser vazia ou nula.");
+		
+			
 		String idDoador = "";
 		String idReceptor = "";
 		for (Usuario i : usuarios.values()) {
@@ -505,12 +514,20 @@ public class Controller {
 			}
 		}
 		
+		if (idReceptor.equals("")) throw new IllegalArgumentException("Item nao encontrado: " + idReceptor);
+		
+		if (idDoador.equals("")) throw new IllegalArgumentException("Item nao encontrado: " + idDoador);
+		
+		if (!usuarios.get(idDoador).getItens().get(idDoado).getDescricao().equals(usuarios.get(idReceptor).getItens().get(idNecessario).getDescricao())) {
+			throw new IllegalArgumentException("Os itens nao tem descricoes iguais.");
+		}
+		
 		String doador = usuarios.get(idDoador).getNome()+"/"+usuarios.get(idDoador).getId();
 		String receptor = usuarios.get(idReceptor).getNome()+"/"+usuarios.get(idReceptor).getId();
 		String descricao = usuarios.get(idDoador).getItens().get(idDoado).getDescricao();
 		int qtd = Math.min(usuarios.get(idDoador).getItens().get(idDoado).getQuant(), usuarios.get(idReceptor).getItens().get(idNecessario).getQuant());
 		
-		doacoes.put(new Doacao(data, usuarios.get(idDoador).getItens().get(idDoado).getDescricao()), "data - doador: " + doador + ", item: " + descricao + ", quantidade: " + qtd + ", receptor: " + receptor);
+		doacoes.put(new Doacao(data, usuarios.get(idDoador).getItens().get(idDoado).getDescricao()), data + " - doador: " + doador + ", item: " + descricao + ", quantidade: " + qtd + ", receptor: " + receptor);
 		
 		int newQtdDoado = usuarios.get(idDoador).getItens().get(idDoado).getQuant() - qtd;
 		int newQtdNecessario = usuarios.get(idReceptor).getItens().get(idNecessario).getQuant() - qtd;
@@ -521,7 +538,7 @@ public class Controller {
 		if (newQtdNecessario > 0) atualizaItem(idNecessario, idReceptor, newQtdNecessario, "");
 		else removeItem(idNecessario, idReceptor);
 		
-		
+		return  data + " - doador: " + doador + ", item: " + descricao + ", quantidade: " + qtd + ", receptor: " + receptor;
 	
 	}
 	public Object listaDoacoes() {
