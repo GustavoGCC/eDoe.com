@@ -491,14 +491,7 @@ public class Controller {
 		return pontos;
 	}
 	public String realizaDoacao(int idNecessario, int idDoado, String data) {
-		if (idDoado < 0) throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
-		
-		if (idNecessario < 0) throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
-		
-		if (data==null) throw new NullPointerException("Entrada invalida: data nao pode ser vazia ou nula.");
-		
-		if (data.trim().equals("")) throw new IllegalArgumentException("Entrada invalida: data nao pode ser vazia ou nula.");
-		
+		this.validador.validaRealizaDoacao(idNecessario,idDoado,data);		
 			
 		String idDoador = "";
 		String idReceptor = "";
@@ -514,9 +507,9 @@ public class Controller {
 			}
 		}
 		
-		if (idReceptor.equals("")) throw new IllegalArgumentException("Item nao encontrado: " + idReceptor);
+		if (idReceptor.equals("")) throw new IllegalArgumentException("Item nao encontrado: " + idNecessario + ".");
 		
-		if (idDoador.equals("")) throw new IllegalArgumentException("Item nao encontrado: " + idDoador);
+		if (idDoador.equals("")) throw new IllegalArgumentException("Item nao encontrado: " + idDoado + ".");
 		
 		if (!usuarios.get(idDoador).getItens().get(idDoado).getDescricao().equals(usuarios.get(idReceptor).getItens().get(idNecessario).getDescricao())) {
 			throw new IllegalArgumentException("Os itens nao tem descricoes iguais.");

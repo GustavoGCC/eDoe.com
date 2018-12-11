@@ -213,6 +213,16 @@ public class Validacao {
 		
 		if (!usuarios.get(idReceptor).getItens().containsKey(idItemNecessario)) {throw new IllegalArgumentException("Item nao encontrado: " + idItemNecessario + ".");}
 	}
+	public void validaRealizaDoacao(int idNecessario, int idDoado, String data) {
+		if (idDoado < 0) throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
+		
+		if (idNecessario < 0) throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
+		
+		if (data==null) throw new NullPointerException("Entrada invalida: data nao pode ser vazia ou nula.");
+		
+		if (data.trim().equals("")) throw new IllegalArgumentException("Entrada invalida: data nao pode ser vazia ou nula.");
+		
+	}
 	
 	
 

@@ -86,8 +86,12 @@ public class Facade {
 		return c.match(idReceptor, idItemNecessario);
 	}
 	
+	public String realizaDoacao(int idItemNec, int idItemDoado, String data) {
+		return c.realizaDoacao(idItemNec, idItemDoado, data);
+	}
+	
 	public static void main(String[] args) {
-		args = new String[] {"eDoe.Facade","EasyAcceptTestes/use_case_1.txt","EasyAcceptTestes/use_case_2.txt","EasyAcceptTestes/use_case_3.txt","EasyAcceptTestes/use_case_4.txt","EasyAcceptTestes/use_case_5.txt"};
+		args = new String[] {"eDoe.Facade","EasyAcceptTestes/use_case_1.txt","EasyAcceptTestes/use_case_2.txt","EasyAcceptTestes/use_case_3.txt","EasyAcceptTestes/use_case_4.txt","EasyAcceptTestes/use_case_5.txt","EasyAcceptTestes/use_case_6.txt"};
 		EasyAccept.main(args);
 	}
 	
