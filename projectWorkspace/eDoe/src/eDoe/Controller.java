@@ -37,6 +37,7 @@ public class Controller {
 	/**
 	 * Contador para a adição de itens.
 	 */
+	private Map<Doacao,String> doacoes;
 	private int idItens;
 	/**
 	 * Realizador da validação dos itens
@@ -47,9 +48,12 @@ public class Controller {
 	 * um TreeMap de descritores(Ordem alfabética das chaves), põe o idItens igual a zero para iniciar o sistema e constrói um novo
 	 * validador.
 	 */
+	
+	
 	public Controller() {
 		this.usuarios = new LinkedHashMap<String,Usuario>();
 		this.descritores = new TreeMap<String,Descritor>();
+		this.doacoes = new TreeMap<Doacao,String>();
 		this.idItens = 0;
 		this.validador = new Validacao();
 	}
@@ -486,9 +490,39 @@ public class Controller {
 		
 		return pontos;
 	}
-	public Object realizaDoacao(int i, int j, String string) {
-		// TODO Auto-generated method stub
-		return null;
+	public void realizaDoacao(int idDoado, int idNecessario, String data) {
+		String idDoador = "";
+		String idReceptor = "";
+		for (Usuario i : usuarios.values()) {
+			for (Item j : i.getItens().values()) {
+				if (j.getId() == idDoado) {
+					idDoador = i.getId();
+				}
+				
+				else if (j.getId() == idNecessario) {
+					idReceptor = i.getId();
+				}
+			}
+		}
+		
+		String doador = usuarios.get(idDoador).getNome()+"/"+usuarios.get(idDoador).getId();
+		String receptor = usuarios.get(idReceptor).getNome()+"/"+usuarios.get(idReceptor).getId();
+		String descricao = usuarios.get(idDoador).getItens().get(idDoado).getDescricao();
+		int qtd = Math.min(usuarios.get(idDoador).getItens().get(idDoado).getQuant(), usuarios.get(idReceptor).getItens().get(idNecessario).getQuant());
+		
+		doacoes.put(new Doacao(data, usuarios.get(idDoador).getItens().get(idDoado).getDescricao()), "data - doador: " + doador + ", item: " + descricao + ", quantidade: " + qtd + ", receptor: " + receptor);
+		
+		int newQtdDoado = usuarios.get(idDoador).getItens().get(idDoado).getQuant() - qtd;
+		int newQtdNecessario = usuarios.get(idReceptor).getItens().get(idNecessario).getQuant() - qtd;
+		
+		if (newQtdDoado > 0) atualizaItem(idDoado, idDoador, newQtdDoado, "");
+		else removeItem(idDoado, idDoador);
+		
+		if (newQtdNecessario > 0) atualizaItem(idNecessario, idReceptor, newQtdNecessario, "");
+		else removeItem(idNecessario, idReceptor);
+		
+		
+	
 	}
 	public Object listaDoacoes() {
 		// TODO Auto-generated method stub
