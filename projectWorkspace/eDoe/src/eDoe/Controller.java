@@ -535,7 +535,10 @@ public class Controller {
 	
 	}
 	public Object listaDoacoes() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<String> lista =new ArrayList<>();
+		for (String doacao : this.doacoes.values()) {
+			lista.add(doacao);
+		}
+		return String.join(" | ", lista);
 	}
 }

@@ -282,7 +282,7 @@ class ControllerTest {
 		} catch(IllegalArgumentException exception) {};
 		
 		try {c.match("", 1);
-		} catch(IllegalArgumentException exception) {};
+		} catch(IllegalArgumentException exception) {}; 
 		
 		try {c.match("80643201009", -3);
 		} catch(IllegalArgumentException exception) {};
@@ -367,7 +367,7 @@ class ControllerTest {
 		c.adicionaItem("222", "carro", 1, "vermelho");
 		
 		assertEquals(c.listaDoacoes(),"");
-		
+		 
 		c.realizaDoacao(0,8,"01/01/2000");
 		c.realizaDoacao(3,7,"01/01/2001");
 		c.realizaDoacao(1,9,"01/01/2001");
