@@ -275,7 +275,7 @@ class ControllerTest {
 		c.adicionaItem("111", "Cama", 1, "madeira,plus size");
 		c.adicionaItem("111", "cama", 2, "plus size, madeira");
 		
-		assertEquals(c.match("84473712044",0), "7 - cama, tags: [plus size, madeira], quantidade: 2, doador: Gustavo/111 | 6 - Cama, tags: [madeira,plus size], quantidade: 1, doador: Gustavo/111 | 5 - cama, tags: [chique], quantidade: 5, doador: Gabriel/222 | 4 - cama, tags: [madeira], quantidade: 1, doador: Gabriel/222 | 3 - cama, tags: [pulavel], quantidade: 2, doador: Gustavo/111");
+		assertEquals(c.match("84473712044",0), "7 - cama, tags: [plus size,  madeira], quantidade: 2, doador: Gustavo/111 | 5 - cama, tags: [chique], quantidade: 1, doador: Gabriel/222 | 6 - cama, tags: [madeira, plus size], quantidade: 1, doador: Gustavo/111 | 3 - cama, tags: [pulavel], quantidade: 2, doador: Gustavo/111 | 4 - cama, tags: [madeira], quantidade: 1, doador: Gabriel/222");
 		assertEquals(c.match("84473712044",1),"");
 		
 		try {c.match(null, 0);
@@ -319,7 +319,7 @@ class ControllerTest {
 		c.adicionaItem("111", "cama", 2, "plus size, madeira");
 		
 		assertEquals(c.realizaDoacao(0,8,"01/01/2000"),"01/01/2000 - doador: Gustavo/111, item: cama, quantidade: 2, receptor: Murilo Luiz Brito/84473712044");
-		assertEquals(c.realizaDoacao(3,7,"01/01/2001"),"01/01/2001 - doador: Gustavo/111, item: Cama, quantidade: 1, receptor: Tomas Otavio Lucas Teixeira/80643201009");
+		assertEquals(c.realizaDoacao(3,7,"01/01/2001"),"01/01/2001 - doador: Gustavo/111, item: cama, quantidade: 1, receptor: Tomas Otavio Lucas Teixeira/80643201009");
 		
 		try {c.realizaDoacao(-1,7,"01/01/2000");
 		} catch(IllegalArgumentException exception) {};
@@ -340,7 +340,7 @@ class ControllerTest {
 		} catch(IllegalArgumentException exception) {};
 		
 		try {c.realizaDoacao(0,7,null);
-		} catch(IllegalArgumentException exception) {};		
+		} catch(NullPointerException exception) {};		
 		
 	}
 	

@@ -1,5 +1,6 @@
 package eDoe;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -90,8 +91,20 @@ public class Facade {
 		return c.realizaDoacao(idItemNec, idItemDoado, data);
 	}
 	
+	public String listaDoacoes() {
+		return c.listaDoacoes();
+	}
+	
+	public void finalizaSistema() throws IOException {
+		c.finalizaSistema();
+	}
+	
+	public void iniciaSistema() throws ClassNotFoundException, IOException {
+		c.iniciaSistema();
+	}
+	
 	public static void main(String[] args) {
-		args = new String[] {"eDoe.Facade","EasyAcceptTestes/use_case_1.txt","EasyAcceptTestes/use_case_2.txt","EasyAcceptTestes/use_case_3.txt","EasyAcceptTestes/use_case_4.txt","EasyAcceptTestes/use_case_5.txt","EasyAcceptTestes/use_case_6.txt"};
+		args = new String[] {"eDoe.Facade","EasyAcceptTestes/use_case_1.txt","EasyAcceptTestes/use_case_2.txt","EasyAcceptTestes/use_case_3.txt","EasyAcceptTestes/use_case_4.txt","EasyAcceptTestes/use_case_5.txt","EasyAcceptTestes/use_case_6.txt","EasyAcceptTestes/use_case_7.txt"};
 		EasyAccept.main(args);
 	}
 	

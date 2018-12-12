@@ -1,11 +1,14 @@
 package eDoe;
+
+import java.io.Serializable;
+
 /**
  * Classe que serve para guardar descricoes de itens ja armazenadas no sistema com sua quantidade atuais(como um inventario),
  *   considerando os itens doados apenas
  * @author Joao Victor Teodulo Wanderley
  *
  */
-public class Descritor {
+public class Descritor implements Serializable{
 	/**
 	 * A descricao em si
 	 */

@@ -169,8 +169,6 @@ class ValidacaoTest {
 		assertThrows(IllegalArgumentException.class, ()->{v.validaAdicionaDescritor(null, descritores);});
 		
 		assertThrows(IllegalArgumentException.class, ()->{v.validaAdicionaDescritor("", descritores);});
-
-		assertThrows(IllegalArgumentException.class, ()->{v.validaAdicionaDescritor(descricao1, descritores);});
   
 		try {v.validaAdicionaDescritor(null, descritores);
 		}catch(IllegalArgumentException exception) {

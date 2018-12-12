@@ -1,9 +1,10 @@
 package eDoe;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Usuario {
+public class Usuario implements Serializable{
 	private String nome;
 	private String id;
 	private String email;

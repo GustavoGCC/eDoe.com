@@ -1,6 +1,8 @@
 package eDoe;
 
-public class Doacao implements Comparable<Doacao>{
+import java.io.Serializable;
+
+public class Doacao implements Comparable<Doacao>, Serializable{
 	String data;
 	String descricaoItemDoado;
 	

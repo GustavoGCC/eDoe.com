@@ -2,8 +2,12 @@ package eDoe;
 
 import java.awt.List;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -328,6 +332,7 @@ public class Controller {
 		String s="";
 		
 		for (Usuario i : usuarios.values()) {
+			if (i.getStatus().equals("doador"))
 			for (Item j : i.getItens().values()) {
 				lista.put(j, i);
 			}
@@ -534,11 +539,134 @@ public class Controller {
 		return  data + " - doador: " + doador + ", item: " + descricao + ", quantidade: " + qtd + ", receptor: " + receptor;
 	
 	}
-	public Object listaDoacoes() {
+	public String listaDoacoes() {
 		ArrayList<String> lista =new ArrayList<>();
+		
 		for (String doacao : this.doacoes.values()) {
 			lista.add(doacao);
 		}
+		
 		return String.join(" | ", lista);
 	}
+	public void finalizaSistema() throws IOException {
+		 FileOutputStream arqUser = new FileOutputStream("arquivos_sistema/usuarios.txt");
+	        
+		 ObjectOutputStream user = new ObjectOutputStream(arqUser);
+			
+		 ArrayList<Usuario> users = new ArrayList<Usuario>();
+			
+		 for (Usuario u : this.usuarios.values()) {
+			 users.add(u);
+			}
+	    
+		 user.writeObject(users);
+		 
+		 user.close();
+		 
+		 FileOutputStream arqDoac = new FileOutputStream("arquivos_sistema/Doacoes.txt");
+	     
+		 ObjectOutputStream doac = new ObjectOutputStream(arqDoac);
+			
+		 TreeMap<Doacao,String> doacao = new TreeMap<Doacao,String>();
+		 
+		 for (Entry<Doacao, String> entry : this.doacoes.entrySet()) {
+			 doacao.put(entry.getKey(), entry.getValue());
+			}
+		 
+		 doac.writeObject(doacao);
+		 
+		 doac.close();
+		 
+		 FileOutputStream arqDesc = new FileOutputStream("arquivos_sistema/Descritores.txt");
+	     
+		 ObjectOutputStream desc = new ObjectOutputStream(arqDesc);
+			
+		 TreeMap<String, Descritor> descritors = new TreeMap<String, Descritor>();
+		 
+		 for (Entry<String, Descritor> entry : this.descritores.entrySet()) {
+			 descritors.put(entry.getKey(), entry.getValue());
+			}
+		 
+		 desc.writeObject(descritors);
+		 
+		 desc.close();
+		 
+		 FileOutputStream arqItens = new FileOutputStream("arquivos_sistema/NdeItens.txt");
+	     
+		 ObjectOutputStream Item = new ObjectOutputStream(arqItens);
+			
+		 int itens = this.idItens;
+		 
+		 Item.writeObject(itens);
+		 
+		 Item.close();	
+		 
+		 // As seguintes linhas simulam o reinicio do sistema
+		 this.usuarios = new LinkedHashMap<String,Usuario>();
+		 this.descritores = new TreeMap<String,Descritor>();
+		 this.doacoes = new TreeMap<Doacao,String>();
+		 this.idItens = 0;
+		 this.validador = new Validacao();
+		
+	}
+	public void iniciaSistema() throws IOException, ClassNotFoundException {
+		FileInputStream fis = new FileInputStream("arquivos_sistema/usuarios.txt");
+        
+        ObjectInputStream ois = new ObjectInputStream(fis);
+        
+        ArrayList<Usuario> woi = new ArrayList<>();
+        
+        woi = (ArrayList<Usuario>)ois.readObject();
+        
+        for (Usuario u : woi){
+        	
+         this.usuarios.put(u.getId(), u);
+
+        }
+        
+        ois.close();
+        
+        FileInputStream fis2 = new FileInputStream("arquivos_sistema/Doacoes.txt");
+        
+        ObjectInputStream ois2 = new ObjectInputStream(fis2);
+        
+        TreeMap<Doacao,String> woi2 = new TreeMap<>();
+        
+        woi2 = (TreeMap<Doacao,String>)ois2.readObject();
+        
+        for (Entry<Doacao, String> entry : woi2.entrySet()) {
+			
+			this.doacoes.put(entry.getKey(), entry.getValue());
+		
+        }
+        
+        ois2.close();
+        
+        FileInputStream fis3 = new FileInputStream("arquivos_sistema/Descritores.txt");
+        
+        ObjectInputStream ois3 = new ObjectInputStream(fis3);
+        
+        TreeMap<String,Descritor> woi3 = new TreeMap<>();
+        
+        woi3 = (TreeMap<String,Descritor>)ois3.readObject();
+        
+        for (Entry<String, Descritor> entry : woi3.entrySet()) {
+			
+			this.descritores.put(entry.getKey(), entry.getValue());
+		
+        }
+        
+        ois3.close();
+        
+        FileInputStream fis4 = new FileInputStream("arquivos_sistema/NdeItens.txt");
+        
+        ObjectInputStream ois4 = new ObjectInputStream(fis4);
+        
+        this.idItens = (Integer)ois4.readObject();        
+        
+        ois4.close();
+		
+	}
+	
+	
 }

@@ -1,11 +1,13 @@
 package eDoe;
 
+import java.io.Serializable;
+
 /**
  * Item que é armazenado por usuario e representa um item doado ou um item necessario dependendo se o usuario for doador ou receptor
  * @author Gustavo Gurjão Camargo Campos, Joao Victor Teodulo Wanderley
  *
  */
-public class Item implements Comparable<Item>{
+public class Item implements Comparable<Item>, Serializable{
 	/**
 	 * Descricao do item
 	 */
