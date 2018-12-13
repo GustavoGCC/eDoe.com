@@ -1,6 +1,5 @@
 package eDoe;
 
-import java.awt.List;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -325,7 +324,8 @@ public class Controller {
 	}
 	/**
 	 * Percorre os itens de todos os doadores guardando eles em um TreeMap,deixando todos ordenados automaticamente, e retorna sua representacao em ordem de quantidade, maior para menor
-	 * @return representacao,em string, de todos os itens de todos os doadores, em ordem de quantidade decrescente, no formato : "idDoItem" - "descritor", tags: ["tags"], quantidade: "quantidade", doador: "nomeDoDoador"/"idDoUsuario"\ | 
+	 * @return representacao,em string, de todos os itens de todos os doadores, em ordem de quantidade decrescente, no formato : '"idDoItem" - "descritor", tags: ["tags"], quantidade: "quantidade", doador: "nomeDoDoador"/"idDoUsuario"\';
+	 * e separados por " | " 
 	 */
 	public String listaItensParaDoacao() {
 		TreeMap<Item,Usuario> lista = new TreeMap<>();
@@ -351,7 +351,7 @@ public class Controller {
 		return s.trim();
 		
 	}
-	
+
 	/**
 	 * Pesquisa um item pela sua descricao e guarda em um TreeMap que automaticamente deixa ordenado em ordem alfabetica
 	 * @param pesquisa termo que vai ser pesquisado na descricao dos itens
@@ -389,9 +389,8 @@ public class Controller {
 	}
 	
 	/**
-	 * Percorre os itens de todos os doadores e retorna sua representacao em ordem de id do item, de menor id para maior id
-	 *   consegue isso criando um ArrayList que guarda arrays de String em que o primeiro elemento e o id de item e o resto e o resultado de getDescricaoETagsEQuantidades()
-	 *   o ArrayList e entao ordenado e seus valores colocados em uma variavel que e retornada.
+	 * Percorre os itens de todos os doadores e retorna sua representacao em ordem de id do item, de menor id para maior id.
+	 *
 	 * @return representacao, em string, de todos os itens de todos os receptores, em ordem de id crescente, no formato : "idDoItem" - "descritor", tags: ["tags"], quantidade: "quantidade", receptor: "nomeDoReceptor"/"idDoUsuario"\ | 
 	 */
 	public String listaItensNecessarios() {
@@ -423,7 +422,14 @@ public class Controller {
 		
 		return s;
 	}
-	
+	/**
+	 * Percorre todos os itens doados e retorna uma representacao em String dos itens que possuem a mesma descricao do item necessario
+	 *  ordenados pelos pontos de match(os que possuem o melhor match vem primeiro).
+	 * @param idReceptor id do usuario receptor que guarda o item necessario
+	 * @param idItemNecessario id do item necessario procurado
+	 * @return uma representacao ordenada dos itens doados, que possuem a mesma descricao do item necessario, de maior ponto de match para menor no formato: '"idDoItem" - "descricaoDoItem", tags: ["tags"], quantidade: "quantidade", doador: "nomeDoDoador"/"idDoUsuario"'
+	 * e separados por " | "
+	 */
 	public String match(String idReceptor, int idItemNecessario) {
 		this.validador.validaMatch(idReceptor,idItemNecessario,this.usuarios);
 		
@@ -459,7 +465,12 @@ public class Controller {
 		
 		
 	}
-	
+	/**
+	 * Calcula os pontos de match entre dois itens e retorna o valor calculado.
+	 * @param itemNecessario item necessario requisitado
+	 * @param candidatoADoacao item que esta sendo avaliado com relacao ao itemNecessario
+	 * @return um valor equivalente aos pontos de match entre itemNecessario e candidatoADoacao
+	 */
 	private int calcularPontosDeMatch(Item itemNecessario,Item candidatoADoacao) {
 		int pontos = 0;
 		
@@ -495,6 +506,14 @@ public class Controller {
 		
 		return pontos;
 	}
+	/**
+	 * Efetua uma doacao reduzindo a quantidade do item necessario e do item doado, além de registrar
+	 *  a doacao no atributo doacoes do controlador
+	 * @param idNecessario id do item requisitado
+	 * @param idDoado id do item que sera doado
+	 * @param data data em que a doacao foi realizada
+	 * @return uma representacao em String da doacao no formato '"data" - doador: "nomeDoDoador"/"idDoDoador", item: "descricaoDoItem", quantidade: "quantidadeDoada", receptor: "nomeDoReceptor"/"idDoReceptor"'
+	 */
 	public String realizaDoacao(int idNecessario, int idDoado, String data) {
 		this.validador.validaRealizaDoacao(idNecessario,idDoado,data);		
 			
@@ -539,6 +558,10 @@ public class Controller {
 		return  data + " - doador: " + doador + ", item: " + descricao + ", quantidade: " + qtd + ", receptor: " + receptor;
 	
 	}
+	/**
+	 * lista todas as doacoes realizadas
+	 * @return retorna as representacoes de doacoes na ordem de data e caso tenham a mesma data, a descricao.
+	 */
 	public String listaDoacoes() {
 		ArrayList<String> lista =new ArrayList<>();
 		
@@ -548,6 +571,10 @@ public class Controller {
 		
 		return String.join(" | ", lista);
 	}
+	/**
+	 * Finaliza o sistema, guardando as modificacoes em usuarios, doacoes, descritores, e o idItens.Depois ele zera todas as informacoes do sistema.
+	 * @throws IOException
+	 */
 	public void finalizaSistema() throws IOException {
 		 FileOutputStream arqUser = new FileOutputStream("arquivos_sistema/usuarios.txt");
 	        
@@ -609,6 +636,11 @@ public class Controller {
 		 this.validador = new Validacao();
 		
 	}
+	/**
+	 * Inicia o sistema, lendo os arquivos salvos e recuperando o estado anterior do sistema.
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
 	public void iniciaSistema() throws IOException, ClassNotFoundException {
 		FileInputStream fis = new FileInputStream("arquivos_sistema/usuarios.txt");
         

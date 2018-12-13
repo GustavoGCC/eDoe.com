@@ -3,7 +3,11 @@ package eDoe;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ * Classe que serve para representar um usuario do sistema,seja doador ou receptor.
+ * @author Daniel de Matos Figueredo.
+ *
+ */
 public class Usuario implements Serializable{
 	private String nome;
 	private String id;
