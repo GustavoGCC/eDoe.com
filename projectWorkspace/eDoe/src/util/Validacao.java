@@ -201,6 +201,12 @@ public class Validacao {
 		}
 		
 	}
+	/**
+	 * Metodo que verifica a existencia de possiveis erros na execucao de validaMatch
+	 * @param idReceptor id do usuario receptor que contem o item necessario que tera um match
+	 * @param idItemNecessario id do item necessario que tera um match
+	 * @param usuarios mapa de usuarios
+	 */
 	public void validaMatch(String idReceptor, int idItemNecessario, Map<String, Usuario> usuarios) {
 		if (idReceptor == null || idReceptor.trim().equals("")) {throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");}
 		
@@ -213,6 +219,12 @@ public class Validacao {
 		
 		if (!usuarios.get(idReceptor).getItens().containsKey(idItemNecessario)) {throw new IllegalArgumentException("Item nao encontrado: " + idItemNecessario + ".");}
 	}
+	/**
+	 * Metodo que verifica a existencia de possiveis erros na execucao de realizaDoacao
+	 * @param idNecessario id do item necessario que tera sua necessidade diminuida ou extinguida
+	 * @param idDoado id do item doado que participara da doacao
+	 * @param data data em que a doacao ira acontecer
+	 */
 	public void validaRealizaDoacao(int idNecessario, int idDoado, String data) {
 		if (idDoado < 0) throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
 		
