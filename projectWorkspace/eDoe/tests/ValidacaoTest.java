@@ -357,12 +357,117 @@ class ValidacaoTest {
 	
 	@Test
 	void testValidaExibeItem() {
+		Validacao v = new Validacao();
+		Map<String, Usuario> usuarios = new HashMap<>();
+		Usuario u1 =  new Usuario("999", "Lucas Leal", "lucas.lucena@ccc.ufcg.edu.br", "2345-6780", "PESSOA_FISICA", "doador");
+		usuarios.put("999", u1);
+		u1.adicionaItem("armario", 1, "4 portas", 1);
+		
+		
+		try {v.validaExibeItem(1, null, usuarios);
+		}catch(IllegalArgumentException exception) {
+			assertEquals(exception.toString(), "java.lang.IllegalArgumentException: Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+			}
+		
+		try {v.validaExibeItem(1, "", usuarios);
+		}catch(IllegalArgumentException exception) {
+			assertEquals(exception.toString(), "java.lang.IllegalArgumentException: Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+		}
+		
+		try {v.validaExibeItem(1, "222", usuarios);
+		}catch(IllegalArgumentException exception) {
+			assertEquals(exception.toString(), "java.lang.IllegalArgumentException: Usuario nao encontrado: 222.");
+		}
+		
+		try {v.validaExibeItem(2, "999", usuarios);
+		}catch(IllegalArgumentException exception) {
+			assertEquals(exception.toString(), "java.lang.IllegalArgumentException: Item nao encontrado: 2.");
+		}		
+		
+	}
 		
 
-	}
 	
 	@Test
 	void testValidaPesquisaItemParaDoacaoPorDescricao() {
-
+		Validacao v = new Validacao();
+		
+		try {v.validaPesquisaItemParaDoacaoPorDescricao("");;
+		}catch(IllegalArgumentException exception) {
+			assertEquals(exception.toString(), "java.lang.IllegalArgumentException: Entrada invalida: texto da pesquisa nao pode ser vazio ou nulo.");
+		}
+		
+		try {v.validaPesquisaItemParaDoacaoPorDescricao(null);;
+		}catch(IllegalArgumentException exception) {
+			assertEquals(exception.toString(), "java.lang.IllegalArgumentException: Entrada invalida: texto da pesquisa nao pode ser vazio ou nulo.");
+		}
+		
 	}
+	
+	@Test
+	void testValidaMatch() {
+		Validacao v = new Validacao();
+		Map<String, Usuario> usuarios = new HashMap<>();
+		Usuario u1 = new Usuario("222", "Lucas Leal", "lucas.lucena@ccc.ufcg.edu.br", "2345-6780", "PESSOA_FISICA", "doador");
+		Usuario u2 = new Usuario("111", "AAA", "RRRRr", "2345-6780", "PESSOA_FISICA", "receptor");
+		usuarios.put("222", u1);
+		usuarios.put("111", u2);
+		
+		try {v.validaMatch("", 4, usuarios);;
+		}catch(IllegalArgumentException exception) {
+			assertEquals(exception.toString(), "java.lang.IllegalArgumentException: Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+		}
+		
+		try {v.validaMatch(null, 0, usuarios);;
+		}catch(IllegalArgumentException exception) {
+			assertEquals(exception.toString(), "java.lang.IllegalArgumentException: Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+		}
+		
+		try {v.validaMatch("333", 0, usuarios);;
+		}catch(IllegalArgumentException exception) {
+			assertEquals(exception.toString(), "java.lang.IllegalArgumentException: Usuario nao encontrado: 333.");
+		}
+		
+		try {v.validaMatch("222", 0, usuarios);;
+		}catch(IllegalArgumentException exception) {
+			assertEquals(exception.toString(), "java.lang.IllegalArgumentException: O Usuario deve ser um receptor: 222.");
+		}
+		
+		try {v.validaMatch("111", -2, usuarios);;
+		}catch(IllegalArgumentException exception) {
+			assertEquals(exception.toString(), "java.lang.IllegalArgumentException: Entrada invalida: id do item nao pode ser negativo.");
+		}
+		
+		try {v.validaMatch("111", 21, usuarios);;
+		}catch(IllegalArgumentException exception) {
+			assertEquals(exception.toString(), "java.lang.IllegalArgumentException: Item nao encontrado: 21.");
+		}
+	
+	}
+	
+	@Test
+	void testValidaRealizaDoacao() {
+		Validacao v = new Validacao();
+		
+		try {v.validaRealizaDoacao(-1, 2, "29/03/2018");;
+		}catch(IllegalArgumentException exception) {
+			assertEquals(exception.toString(), "java.lang.IllegalArgumentException: Entrada invalida: id do item nao pode ser negativo.");
+		}
+		
+		try {v.validaRealizaDoacao(1, -2, "29/03/2018");;
+		}catch(IllegalArgumentException exception) {
+			assertEquals(exception.toString(), "java.lang.IllegalArgumentException: Entrada invalida: id do item nao pode ser negativo.");
+		}
+		
+		try {v.validaRealizaDoacao(1, 2, "");;
+		}catch(IllegalArgumentException exception) {
+			assertEquals(exception.toString(), "java.lang.IllegalArgumentException: Entrada invalida: data nao pode ser vazia ou nula.");
+		}
+		
+		try {v.validaRealizaDoacao(1, 2, null);;
+		}catch(IllegalArgumentException exception) {
+			assertEquals(exception.toString(), "java.lang.IllegalArgumentException: Entrada invalida: data nao pode ser vazia ou nula.");
+		}
+	}
+
 }

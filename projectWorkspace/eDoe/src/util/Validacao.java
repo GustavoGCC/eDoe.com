@@ -193,7 +193,7 @@ public class Validacao {
 	 */
 	public void validaPesquisaItemParaDoacaoPorDescricao(String pesquisa) {
 		if (pesquisa==null) {
-			throw new NullPointerException("Entrada invalida: texto da pesquisa nao pode ser vazio ou nulo.");
+			throw new IllegalArgumentException("Entrada invalida: texto da pesquisa nao pode ser vazio ou nulo.");
 		}
 		
 		if (pesquisa.trim().equals("")) {
@@ -230,7 +230,7 @@ public class Validacao {
 		
 		if (idNecessario < 0) throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
 		
-		if (data==null) throw new NullPointerException("Entrada invalida: data nao pode ser vazia ou nula.");
+		if (data==null) throw new IllegalArgumentException("Entrada invalida: data nao pode ser vazia ou nula.");
 		
 		if (data.trim().equals("")) throw new IllegalArgumentException("Entrada invalida: data nao pode ser vazia ou nula.");
 		

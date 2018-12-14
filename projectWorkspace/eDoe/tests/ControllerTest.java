@@ -146,7 +146,7 @@ class ControllerTest {
 		}catch(IllegalArgumentException exception) {};
 		
 		try {c.pesquisaItemParaDoacaoPorDescricao(null);
-		}catch(NullPointerException exception) {};
+		}catch(IllegalArgumentException exception) {};
 		
 		assertEquals(c.pesquisaItemParaDoacaoPorDescricao("travesseiro"),"");
 		assertEquals(c.pesquisaItemParaDoacaoPorDescricao("cama"),"1 - cama de casal, tags: [plus size], quantidade: 1 | 2 - cama de solteiro, tags: [infantil], quantidade: 1 | 0 - cama elastica, tags: [pulavel], quantidade: 2");
@@ -340,7 +340,7 @@ class ControllerTest {
 		} catch(IllegalArgumentException exception) {};
 		
 		try {c.realizaDoacao(0,7,null);
-		} catch(NullPointerException exception) {};		
+		} catch(IllegalArgumentException exception) {};		
 		
 	}
 	
